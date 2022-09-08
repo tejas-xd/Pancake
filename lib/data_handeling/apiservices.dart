@@ -7,16 +7,7 @@ class ApiService {
   final Dio _dio = Dio();
 
   final String baseUrl = 'https://api.themoviedb.org/3';
-  final String apiKey = 'api_key=#####################:::::wq'
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      ''
-      '';
+  final String apiKey = 'api_key=#####################';
 
 
   Future<List<Genres>> getGenreList(String mediatype) async {
