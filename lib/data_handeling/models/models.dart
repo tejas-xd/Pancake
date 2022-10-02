@@ -1,4 +1,3 @@
-//models
 
 class Mixed {
   bool? adult;
