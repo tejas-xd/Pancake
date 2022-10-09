@@ -173,7 +173,6 @@ class ApiService {
     try {
       final url = '$baseUrl/movie/$id?$apiKey';
       final response = await _dio.get(url);
-      var movies = response.data;
       Moviedetail movie = Moviedetail.fromJson(response.data);
       return movie;
     } catch (error, stacktrace) {
@@ -212,7 +211,6 @@ class ApiService {
     try {
       final url = '$baseUrl/tv/$id?$apiKey';
       final response = await _dio.get(url);
-      var tvshow = response.data;
       TVdetail tv = TVdetail.fromJson(response.data);
       return tv;
     } catch (error, stacktrace) {
@@ -251,7 +249,6 @@ class ApiService {
     try {
       final url = '$baseUrl/tv/$id/season/$season/episode/$episode?$apiKey';
       final response = await _dio.get(url);
-      var tvid = response.data;
       TVimbd tv = TVimbd.fromJson(response.data);
       return tv;
     } catch (error, stacktrace) {
