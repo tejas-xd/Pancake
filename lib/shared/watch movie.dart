@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handeling/apiservices.dart';
 import 'dart:io';
+import 'package:flutter/services.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -16,7 +17,7 @@ class WebViewExampleState extends State<WebViewExample> {
   @override
   void initState() {
     super.initState();
-    // Enable virtual display.
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft,DeviceOrientation.landscapeRight]);
     if (Platform.isAndroid) {
       WebView.platform = AndroidWebView();
 
@@ -25,11 +26,19 @@ class WebViewExampleState extends State<WebViewExample> {
 
   @override
   Widget build(BuildContext context) {
-    return WebView(
-      initialUrl: 'https://2embed.org/embed/${widget.id}',
-      javascriptMode: JavascriptMode.unrestricted,
-      navigationDelegate: (navigation) => NavigationDecision.prevent,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: WebView(
+        initialUrl: 'https://2embed.org/embed/${widget.id}',
+        javascriptMode: JavascriptMode.unrestricted,
+        navigationDelegate: (navigation) => NavigationDecision.prevent,
+      ),
     );
+  }
+  @override
+  void dispose() {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    super.dispose();
   }
 }
 
