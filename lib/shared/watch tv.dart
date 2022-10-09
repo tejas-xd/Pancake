@@ -28,15 +28,18 @@ class WebViewExampleTVState extends State<WebViewExampleTV> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: ApiService().getTVimbdid(widget.id, widget.season, widget.episode),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        return (snapshot.hasData) ? WebView(
-          initialUrl: 'https://2embed.org/embed/${snapshot.data.id}',
-          javascriptMode: JavascriptMode.unrestricted,
-          navigationDelegate: (navigation) => NavigationDecision.prevent,
-        ) : const Center(child: CircularProgressIndicator(),);
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: FutureBuilder(
+        future: ApiService().getTVimbdid(widget.id, widget.season, widget.episode),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return (snapshot.hasData) ? WebView(
+            initialUrl: 'https://2embed.org/embed/${snapshot.data.id}',
+            javascriptMode: JavascriptMode.unrestricted,
+            navigationDelegate: (navigation) => NavigationDecision.prevent,
+          ) : const Center(child: CircularProgressIndicator(),);
+        },
+      ),
     );
   }
 }
