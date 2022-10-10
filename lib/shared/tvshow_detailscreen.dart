@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handeling/apiservices.dart';
 import 'package:pancake/shared/customvalues.dart';
-import 'package:pancake/shared/watch%20tv.dart';
+import 'package:pancake/shared/watch_tv.dart';
 
 class TVDescription extends StatefulWidget {
   final int id;
