@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pancake/homescreen.dart';
 import 'package:flutter/services.dart';
 
-
+//ver 2
 void main()
 {
   WidgetsFlutterBinding.ensureInitialized();
