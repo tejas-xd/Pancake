@@ -38,6 +38,7 @@ dependencies:
   carousel_slider: ^4.1.1
   dio: ^4.0.6
   webview_flutter: ^3.0.4
+  google_nav_bar: ^5.0.6
 
 dev_dependencies:
   flutter_test:
