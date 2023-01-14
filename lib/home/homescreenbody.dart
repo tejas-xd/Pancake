@@ -65,7 +65,7 @@ class _HomescreenbodyState extends State<Homescreenbody>
       //       ],
       //     )),
       body: ListView(
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.only(bottom: 100),
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
         children: [
@@ -77,9 +77,7 @@ class _HomescreenbodyState extends State<Homescreenbody>
               futre: ApiService().getTrendingMovie(),
             ),
           ),
-          ListViewDatamovie(
-            futre: ApiService().getTrendingMovie(),
-          ),
+          ListViewDatamovie(futre: ApiService().getTrendingMovie(),),
           CustomBar(
             str1: 'Trending',
             str2: 'TV-shows',
@@ -87,32 +85,62 @@ class _HomescreenbodyState extends State<Homescreenbody>
               futre: ApiService().getTrendingTVshow(),
             ),
           ),
-          ListViewDatatv(
-            futre: ApiService().getTrendingTVshow(),
-          ),
+          ListViewDatatv(futre: ApiService().getTrendingTVshow(),),
           CustomBar(
               str1: 'Popular',
               str2: 'Movies',
               navigate: GridViewDatamovie(futre: ApiService().getPopularMovie())),
           ListViewDatamovie(futre: ApiService().getPopularMovie()),
           CustomBar(
-              str1: 'Top Rated',
-              str2: 'Movies',
-              navigate:
-              GridViewDatamovie(futre: ApiService().getTopRatedMovie())),
-          ListViewDatamovie(futre: ApiService().getTopRatedMovie()),
-          CustomBar(
-              str1: 'Upcoming',
-              str2: 'Movies',
-              navigate:
-              GridViewDatamovie(futre: ApiService().getUpcomingMovie())),
-          ListViewDatamovie(futre: ApiService().getUpcomingMovie()),
-          CustomBar(
-              str1: 'Now Playing',
-              str2: 'Movies',
-              navigate:
-              GridViewDatamovie(futre: ApiService().getNowPlayingMovie())),
-          ListViewDatamovie(futre: ApiService().getNowPlayingMovie()),
+            str1: 'Popular',
+            str2: 'TV-Show',
+            navigate: GridViewDatatv(
+              futre: ApiService().getPopularTVshow(),
+            ),
+          ),
+          ListViewDatatv(futre: ApiService().getPopularTVshow(),),
+          // CustomBar(
+          //     str1: 'Top Rated',
+          //     str2: 'Movies',
+          //     navigate:
+          //     GridViewDatamovie(futre: ApiService().getTopRatedMovie())),
+          // ListViewDatamovie(futre: ApiService().getTopRatedMovie()),
+          // CustomBar(
+          //   str1: 'Top Rated',
+          //   str2: 'TV-Show',
+          //   navigate: GridViewDatatv(
+          //     futre: ApiService().getTopRatedTVshow(),
+          //   ),
+          // ),
+          // ListViewDatatv(futre: ApiService().getTopRatedTVshow(),),
+          // CustomBar(
+          //     str1: 'Upcoming',
+          //     str2: 'Movies',
+          //     navigate:
+          //     GridViewDatamovie(futre: ApiService().getUpcomingMovie())),
+          // ListViewDatamovie(futre: ApiService().getUpcomingMovie()),
+          // CustomBar(
+          //   str1: 'Upcoming',
+          //   str2: 'TV-Show',
+          //   navigate: GridViewDatatv(
+          //     futre: ApiService().getUpcomingTVshow(),
+          //   ),
+          // ),
+          // ListViewDatatv(futre: ApiService().getUpcomingTVshow(),),
+          // CustomBar(
+          //     str1: 'Now Playing',
+          //     str2: 'Movies',
+          //     navigate:
+          //     GridViewDatamovie(futre: ApiService().getNowPlayingMovie())),
+          // ListViewDatamovie(futre: ApiService().getNowPlayingMovie()),
+          // CustomBar(
+          //   str1: 'Now Playing',
+          //   str2: 'TV-Show',
+          //   navigate: GridViewDatatv(
+          //     futre: ApiService().getNowPlayingTVshow(),
+          //   ),
+          // ),
+          // ListViewDatatv(futre: ApiService().getNowPlayingTVshow(),),
         ],
       ),
     );
