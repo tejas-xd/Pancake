@@ -1,14 +1,13 @@
 import 'dart:ui';
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/more/morescreenbody.dart';
 import 'package:pancake/search/searchscreenbody.dart';
+import 'package:pancake/shared/customvalues.dart';
 import 'home/homescreenbody.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 class Homescreen extends StatefulWidget {
-  Homescreen({
+  const Homescreen({
     Key? key,
   }) : super(key: key);
   @override
@@ -31,67 +30,65 @@ class _HomescreenState extends State<Homescreen> {
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.dark,
-        canvasColor: Colors.black,
+        canvasColor: xcanvas,
       ),
       debugShowCheckedModeBanner: false,
-      home: SafeArea(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          extendBody: true,
-          body: PageView(
-            controller: _pageController,
-            onPageChanged: (page) {
-              setState(() {
-                currentIndex = page;
-              });
-            },
-            children: <Widget>[
-              Homescreenbody(),
-              Searchscreenbody(),
-              Morescreenbody(),
-            ],
-          ),
-          bottomNavigationBar: Align(
-            alignment: FractionalOffset.bottomCenter,
-            child: Container(
-              height: 100,
-              child: CurvedNavigationBar(
-                key: _bottomNavigationKey,
-                height: 60.0,
-                index: currentIndex,
-                items: <Widget>[
-                  Icon(
-                    Icons.home,
-                    size: 30,
-                    color: Colors.redAccent,
-                  ),
-                  Icon(
-                    Icons.search,
-                    size: 30,
-                    color: Colors.redAccent,
-                  ),
-                  Icon(
-                    Icons.menu,
-                    size: 30,
-                    color: Colors.redAccent,
-                  ),
-                ],
-                color: Colors.grey.withOpacity(0.95),
-                buttonBackgroundColor: Colors.grey.withOpacity(0.95),
-                backgroundColor: Colors.transparent,
-                animationCurve: Curves.easeInOut,
-                animationDuration: const Duration(milliseconds: 600),
-                onTap: (index) {
-                  currentIndex = index;
-                  _pageController.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.linear,
-                  );
-                  setState(() {});
-                },
-                letIndexChange: (index) => true,
-              ),
+      home: Scaffold(
+        resizeToAvoidBottomInset: false,
+        extendBody: true,
+        body: PageView(
+          controller: _pageController,
+          onPageChanged: (page) {
+            setState(() {
+              currentIndex = page;
+            });
+          },
+          children: const <Widget>[
+            Homescreenbody(),
+            Searchscreenbody(),
+            Morescreenbody(),
+          ],
+        ),
+        bottomNavigationBar: Align(
+          alignment: FractionalOffset.bottomCenter,
+          child: SizedBox(
+            height: 100,
+            child: CurvedNavigationBar(
+              key: _bottomNavigationKey,
+              height: 60.0,
+              index: currentIndex,
+              items: <Widget>[
+                Icon(
+                  Icons.home,
+                  size: 30,
+                  color: xbicon,
+                ),
+                Icon(
+                  Icons.search,
+                  size: 30,
+                  color: xbicon,
+                ),
+                Icon(
+                  Icons.menu,
+                  size: 30,
+                  color: xbicon,
+                ),
+              ],
+              color: xbnavbar,
+              buttonBackgroundColor: xbnavbar,
+              backgroundColor: Colors.transparent,
+              animationCurve: Curves.easeInOut,
+              animationDuration: const Duration(milliseconds: 600),
+              onTap: (index) {
+                currentIndex = index;
+                _pageController.animateToPage(
+                  index,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.linear,
+                );
+                setState(() {});
+              },
+              letIndexChange: (index) => true,
             ),
           ),
         ),
