@@ -181,7 +181,7 @@ class ApiService {
     }
   }
 
-  Future<List<Movie>> getMovieRecomendation(String id) async {
+  Future<List<Movie>> getMovieRecommendations(String id) async {
     try {
       final url = '$baseUrl/movie/$id/recommendations?$apiKey';
       final response = await _dio.get(url);
@@ -194,7 +194,19 @@ class ApiService {
     }
   }
 
-  Future<List<TVshow>> getTVRecomendation(String id) async {
+  Future<TVdetail> getTVDetail(String id) async {
+    try {
+      final url = '$baseUrl/tv/$id?$apiKey';
+      final response = await _dio.get(url);
+      TVdetail tv = TVdetail.fromJson(response.data);
+      return tv;
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
+  Future<List<TVshow>> getTVRecommendations(String id) async {
     try {
       final url = '$baseUrl/tv/$id/recommendations?$apiKey';
       final response = await _dio.get(url);
@@ -220,7 +232,7 @@ class ApiService {
     }
   }
 
-  Future<List<Movie>> getMovieBySeach(String title, String mediatype) async {
+  Future<List<Movie>> getMovieBySearch(String title, String mediatype) async {
     try {
       final url = '$baseUrl/search/$mediatype?$apiKey&query=$title';
       final response = await _dio.get(url);
@@ -233,17 +245,7 @@ class ApiService {
     }
   }
 
-  Future<TVdetail> getTVDetail(String id) async {
-    try {
-      final url = '$baseUrl/tv/$id?$apiKey';
-      final response = await _dio.get(url);
-      TVdetail tv = TVdetail.fromJson(response.data);
-      return tv;
-    } catch (error, stacktrace) {
-      throw Exception(
-          'Exception accoured: $error with stacktrace: $stacktrace');
-    }
-  }
+
 
   Future<List<TVshow>> getTVByGenre(String movieId) async {
     try {
