@@ -151,13 +151,13 @@ class TVshow {
   }
 }
 
-class XGenres {
+class Genre {
   int? id;
   String? name;
 
-  XGenres({this.id, this.name});
+  Genre({this.id, this.name});
 
-  XGenres.fromJson(Map<String, dynamic> json) {
+  Genre.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
