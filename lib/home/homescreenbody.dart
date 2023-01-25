@@ -93,7 +93,7 @@ class Hometab extends StatelessWidget {
           str1: 'Trending',
           str2: 'Movies',
           navigate: GridViewDatamovie(
-            futre: ApiService().getTrendingMovie(),
+            future: ApiService().getTrendingMovie(),
           ),
         ),
         Movielist(
@@ -103,7 +103,7 @@ class Hometab extends StatelessWidget {
           str1: 'Trending',
           str2: 'TV-shows',
           navigate: GridViewDatatv(
-            futre: ApiService().getTrendingTVshow(),
+            future: ApiService().getTrendingTVshow(),
           ),
         ),
         TVlist(
@@ -130,25 +130,25 @@ class Movietab extends StatelessWidget {
               str1: 'Popular',
               str2: 'Movies',
               navigate:
-                  GridViewDatamovie(futre: ApiService().getPopularMovie())),
+                  GridViewDatamovie(future: ApiService().getPopularMovie())),
           Movielist(futre: ApiService().getPopularMovie()),
           CustomBar(
               str1: 'Top Rated',
               str2: 'Movies',
               navigate:
-                  GridViewDatamovie(futre: ApiService().getTopRatedMovie())),
+                  GridViewDatamovie(future: ApiService().getTopRatedMovie())),
           Movielist(futre: ApiService().getTopRatedMovie()),
           CustomBar(
               str1: 'Upcoming',
               str2: 'Movies',
               navigate:
-                  GridViewDatamovie(futre: ApiService().getUpcomingMovie())),
+                  GridViewDatamovie(future: ApiService().getUpcomingMovie())),
           Movielist(futre: ApiService().getUpcomingMovie()),
           CustomBar(
               str1: 'Now Playing',
               str2: 'Movies',
               navigate:
-                  GridViewDatamovie(futre: ApiService().getNowPlayingMovie())),
+                  GridViewDatamovie(future: ApiService().getNowPlayingMovie())),
           Movielist(futre: ApiService().getNowPlayingMovie()),
         ]);
   }
@@ -170,7 +170,7 @@ class TVtab extends StatelessWidget {
           str1: 'Popular',
           str2: 'TV-Show',
           navigate: GridViewDatatv(
-            futre: ApiService().getPopularTVshow(),
+            future: ApiService().getPopularTVshow(),
           ),
         ),
         TVlist(
@@ -180,7 +180,7 @@ class TVtab extends StatelessWidget {
           str1: 'Top Rated',
           str2: 'TV-Show',
           navigate: GridViewDatatv(
-            futre: ApiService().getTopRatedTVshow(),
+            future: ApiService().getTopRatedTVshow(),
           ),
         ),
         TVlist(
@@ -190,7 +190,7 @@ class TVtab extends StatelessWidget {
           str1: 'Upcoming',
           str2: 'TV-Show',
           navigate: GridViewDatatv(
-            futre: ApiService().getUpcomingTVshow(),
+            future: ApiService().getUpcomingTVshow(),
           ),
         ),
         TVlist(
@@ -200,7 +200,7 @@ class TVtab extends StatelessWidget {
           str1: 'Now Playing',
           str2: 'TV-Show',
           navigate: GridViewDatatv(
-            futre: ApiService().getNowPlayingTVshow(),
+            future: ApiService().getNowPlayingTVshow(),
           ),
         ),
         TVlist(
