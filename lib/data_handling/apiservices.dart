@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'dart:async';
-import 'package:pancake/data_handeling/models/models.dart';
-import 'package:pancake/data_handeling/models/moviedetail.dart';
-import 'package:pancake/data_handeling/models/tvdetail.dart';
+import 'package:pancake/data_handling/models/models.dart';
+import 'package:pancake/data_handling/models/moviedetail.dart';
+import 'package:pancake/data_handling/models/tvdetail.dart';
 
 
 
@@ -13,12 +13,12 @@ class ApiService {
   final String apiKey = 'api_key=7380d74c2da6311a7bf41578cc669933';
 
 
-  Future<List<XGenres>> getGenreList(String mediatype) async {
+  Future<List<Genre>> getGenreList(String mediatype) async {
     try {
       final url = '$baseUrl/genre/$mediatype/list?$apiKey';
       final response = await _dio.get(url);
       var genres = response.data['genres'] as List;
-      List<XGenres> genreList = genres.map((g) => XGenres.fromJson(g)).toList();
+      List<Genre> genreList = genres.map((g) => Genre.fromJson(g)).toList();
       return genreList;
     } catch (error, stacktrace) {
       throw Exception(
