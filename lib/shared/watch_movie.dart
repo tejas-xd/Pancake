@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pancake/data_handeling/apiservices.dart';
+import 'package:pancake/data_handling/apiservices.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
 
@@ -26,18 +26,20 @@ class WebViewExampleState extends State<WebViewExample> {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: WebView(
-        initialUrl: 'https://2embed.org/embed/${widget.id}',
+        initialUrl: 'https://vidsrc.me/embed/${widget.id}',
         javascriptMode: JavascriptMode.unrestricted,
-        navigationDelegate: (navigation) => NavigationDecision.prevent,
+        navigationDelegate: (navigation) => NavigationDecision.navigate,
       ),
     );
   }
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    Navigator.pop(context);
     super.dispose();
   }
 }
