@@ -545,7 +545,9 @@ class Genrelist extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => GridViewDatamovie(
+                              builder: (context) => GridPage(
+                                  type: 'movie',
+                                  title: 'MOVIE: ${snapshot.data[index].name}',
                                   future: ApiService().getMovieByGenre(
                                       snapshot.data[index].id.toString()))),
                         );
@@ -553,7 +555,9 @@ class Genrelist extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => GridViewDatatv(
+                              builder: (context) => GridPage(
+                                    type: 'tv',
+                                    title: 'TV: ${snapshot.data[index].name}',
                                     future: ApiService().getTVByGenre(
                                         snapshot.data[index].id.toString()),
                                   )),
@@ -640,8 +644,7 @@ class Seasonlist extends StatelessWidget {
                           ),
                           Align(
                             child: Text(
-                              "  Episode-" +
-                                  snapshot.data[index].episodeNumber.toString(),
+                              "  Episode-${snapshot.data[index].episodeNumber}",
                               style: const TextStyle(
                                   color: Colors.tealAccent,
                                   fontSize: 15,
