@@ -1,11 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/shared/customvalues.dart';
 import 'package:pancake/shared/customwidgets.dart';
-import 'package:pancake/shared/customgridview.dart';
-import 'package:pancake/shared/movie_detailscreen.dart';
-import 'package:pancake/shared/tvshow_detailscreen.dart';
+
 
 class Homescreenbody extends StatefulWidget {
   const Homescreenbody({Key? key}) : super(key: key);
@@ -89,22 +86,16 @@ class Hometab extends StatelessWidget {
       scrollDirection: Axis.vertical,
       children: [
         const HorizontalSliderX(),
-        CustomBar(
+        const CustomBar(
           str1: 'Trending',
           str2: 'Movies',
-          navigate: GridViewDatamovie(
-            future: ApiService().getTrendingMovie(),
-          ),
         ),
         Movielist(
           futre: ApiService().getTrendingMovie(),
         ),
-        CustomBar(
+        const CustomBar(
           str1: 'Trending',
           str2: 'TV-shows',
-          navigate: GridViewDatatv(
-            future: ApiService().getTrendingTVshow(),
-          ),
         ),
         TVlist(
           futre: ApiService().getTrendingTVshow(),
@@ -126,29 +117,25 @@ class Movietab extends StatelessWidget {
             parent: AlwaysScrollableScrollPhysics()),
         scrollDirection: Axis.vertical,
         children: [
-          CustomBar(
-              str1: 'Popular',
-              str2: 'Movies',
-              navigate:
-                  GridViewDatamovie(future: ApiService().getPopularMovie())),
+          const CustomBar(
+            str1: 'Popular',
+            str2: 'Movies',
+          ),
           Movielist(futre: ApiService().getPopularMovie()),
-          CustomBar(
-              str1: 'Top Rated',
-              str2: 'Movies',
-              navigate:
-                  GridViewDatamovie(future: ApiService().getTopRatedMovie())),
+          const CustomBar(
+            str1: 'Top Rated',
+            str2: 'Movies',
+          ),
           Movielist(futre: ApiService().getTopRatedMovie()),
-          CustomBar(
-              str1: 'Upcoming',
-              str2: 'Movies',
-              navigate:
-                  GridViewDatamovie(future: ApiService().getUpcomingMovie())),
+          const CustomBar(
+            str1: 'Upcoming',
+            str2: 'Movies',
+          ),
           Movielist(futre: ApiService().getUpcomingMovie()),
-          CustomBar(
-              str1: 'Now Playing',
-              str2: 'Movies',
-              navigate:
-                  GridViewDatamovie(future: ApiService().getNowPlayingMovie())),
+          const CustomBar(
+            str1: 'Now Playing',
+            str2: 'Movies',
+          ),
           Movielist(futre: ApiService().getNowPlayingMovie()),
         ]);
   }
@@ -166,42 +153,30 @@ class TVtab extends StatelessWidget {
           const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       scrollDirection: Axis.vertical,
       children: [
-        CustomBar(
+        const CustomBar(
           str1: 'Popular',
           str2: 'TV-Show',
-          navigate: GridViewDatatv(
-            future: ApiService().getPopularTVshow(),
-          ),
         ),
         TVlist(
           futre: ApiService().getPopularTVshow(),
         ),
-        CustomBar(
+        const CustomBar(
           str1: 'Top Rated',
           str2: 'TV-Show',
-          navigate: GridViewDatatv(
-            future: ApiService().getTopRatedTVshow(),
-          ),
         ),
         TVlist(
           futre: ApiService().getTopRatedTVshow(),
         ),
-        CustomBar(
+        const CustomBar(
           str1: 'Upcoming',
           str2: 'TV-Show',
-          navigate: GridViewDatatv(
-            future: ApiService().getUpcomingTVshow(),
-          ),
         ),
         TVlist(
           futre: ApiService().getUpcomingTVshow(),
         ),
-        CustomBar(
+        const CustomBar(
           str1: 'Now Playing',
           str2: 'TV-Show',
-          navigate: GridViewDatatv(
-            future: ApiService().getNowPlayingTVshow(),
-          ),
         ),
         TVlist(
           futre: ApiService().getNowPlayingTVshow(),
