@@ -245,8 +245,6 @@ class ApiService {
     }
   }
 
-
-
   Future<List<TVshow>> getTVByGenre(String movieId) async {
     try {
       final url = '$baseUrl/discover/tv?with_genres=$movieId&$apiKey';
@@ -260,13 +258,26 @@ class ApiService {
     }
   }
 
-  Future<List<TVshow>> getTVBySeach(String title, String mediatype) async {
+  Future<List<TVshow>> getTVBySearch(String title, String mediatype) async {
     try {
       final url = '$baseUrl/search/$mediatype?$apiKey&query=$title';
       final response = await _dio.get(url);
       var tvshow = response.data['results'] as List;
       List<TVshow> movieList = tvshow.map((m) => TVshow.fromJson(m)).toList();
       return movieList;
+    } catch (error, stacktrace) {
+      throw Exception(
+          'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
+  Future<List<Episodes>> getTVepisodeBySeason(String id, String season) async {
+    try {
+      final url = '$baseUrl/tv/$id/season/$season?$apiKey';
+      final response = await _dio.get(url);
+      var tvshow = response.data['episodes'] as List;
+      List<Episodes> episodes = tvshow.map((m) => Episodes.fromJson(m)).toList();
+      return episodes;
     } catch (error, stacktrace) {
       throw Exception(
           'Exception accoured: $error with stacktrace: $stacktrace');
