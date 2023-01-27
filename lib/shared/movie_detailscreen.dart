@@ -116,7 +116,7 @@ class MovieDescription extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: const [
                                   Icon(
-                                    Icons.bookmark_add_outlined,
+                                    Icons.watch_later_outlined,
                                     color: Colors.greenAccent,
                                     size: 25.0,
                                   ),
