@@ -30,41 +30,61 @@ class _TVDescriptionState extends State<TVDescription> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               var size = MediaQuery.of(context).size;
               if (snapshot.hasData) {
-                int x = (widget.i==-1)?snapshot.data.seasons[0].seasonNumber:widget.i;
-                (widget.id==-1)?widget.select=snapshot.data.seasons[0].seasonNumber:{};
-                (widget.select=='')?widget.select=snapshot.data.seasons[0].name:{};
+                int x = (widget.i == -1)
+                    ? snapshot.data.seasons[0].seasonNumber
+                    : widget.i;
+                (widget.id == -1)
+                    ? widget.select = snapshot.data.seasons[0].seasonNumber
+                    : {};
+                (widget.select == '')
+                    ? widget.select = snapshot.data.seasons[0].name
+                    : {};
                 void showBookmarkDialogbox(BuildContext context) => showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return Dialog(
+                        backgroundColor: Colors.transparent,
                         child: Container(
-                          color: Colors.blueGrey,
+                          decoration: BoxDecoration(
+                              color: Colors.blueGrey,
+                              borderRadius: BorderRadius.circular(20)),
                           height: size.height * 0.4,
                           width: size.width * 0.4,
                           child: ListView.builder(
-                            itemCount: snapshot.data.seasons.length,
-                              itemBuilder: (context, index){
-                              return Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                                  child: TextButton(
-                                    onPressed: (){
-                                      setState(() {
-                                        widget.select=snapshot.data.seasons[index].name;
-                                        widget.i=snapshot.data.seasons[index].seasonNumber;
-                                        Navigator.pop(context);
-                                      });
-                                    },
-                                    child: Text(
-                                        snapshot.data.seasons[index].name,
-                                        style: const TextStyle(
-                                            color: Colors.lightBlueAccent,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w500,
-                                            letterSpacing: 2)),
+                              itemCount: snapshot.data.seasons.length,
+                              itemBuilder: (context, index) {
+                                return Center(
+                                  child: Container(
+                                    width: size.width * 0.6,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        border: Border.all(
+                                            color: Colors.tealAccent)),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10.0),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          widget.select =
+                                              snapshot.data.seasons[index].name;
+                                          widget.i = snapshot
+                                              .data.seasons[index].seasonNumber;
+                                          Navigator.pop(context);
+                                        });
+                                      },
+                                      child: Text(
+                                          snapshot.data.seasons[index].name,
+                                          style: const TextStyle(
+                                              color: Colors.tealAccent,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                              letterSpacing: 2)),
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
                               }),
                         ),
                       );
@@ -246,7 +266,8 @@ class _TVDescriptionState extends State<TVDescription> {
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                         letterSpacing: 2)),
-                                const Icon(Icons.expand_circle_down_outlined,size: 18,color: Colors.blueGrey)
+                                const Icon(Icons.expand_circle_down_outlined,
+                                    size: 18, color: Colors.blueGrey)
                               ],
                             ),
                           )),
