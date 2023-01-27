@@ -12,8 +12,8 @@ class _MorescreenbodyState extends State<Morescreenbody> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        "working"
+      child: Image(
+        image: NetworkImage('https://media.tenor.com/OeFm9wUArQgAAAAi/watching-movies-popcorns.gif'),
       ),
     );
   }

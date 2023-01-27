@@ -40,7 +40,6 @@ class WebViewExampleState extends State<WebViewExample> {
   @override
   void dispose() {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    Navigator.pop(context);
     super.dispose();
   }
 }
