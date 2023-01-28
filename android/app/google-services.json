@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "26320079529",
+    "project_id": "pancake-14a73",
+    "storage_bucket": "pancake-14a73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:26320079529:android:435b7d5f80ea9ff8e637b8",
+        "android_client_info": {
+          "package_name": "com.example.pancake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "26320079529-9i55ebk0666bpb1kldf2i1rcm6lggbvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9_5iXnWjmX0PPRG36ZZvf-EIbnWlKMwY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "26320079529-9i55ebk0666bpb1kldf2i1rcm6lggbvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

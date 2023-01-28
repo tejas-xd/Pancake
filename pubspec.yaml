@@ -36,14 +36,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
   carousel_slider: ^4.1.1
+  cloud_firestore: ^4.3.1
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.4
+  provider: ^6.0.5
+  google_sign_in: ^5.4.2
   dio: ^4.0.6
+  google_fonts: ^3.0.1
   webview_flutter: ^3.0.4
   google_nav_bar: ^5.0.6
   cached_network_image: ^3.2.3
   dots_indicator: ^2.1.0
-  readmore: ^2.2.0
-  flutter_rating_stars: ^1.0.3+4
-  flutter_rating_bar: ^4.0.1
+
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +74,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/login-banner.gif
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
