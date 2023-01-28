@@ -26,13 +26,7 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        canvasColor: xcanvas,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         extendBody: true,
         body: PageView(
@@ -91,8 +85,7 @@ class _HomescreenState extends State<Homescreen> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 }
 
