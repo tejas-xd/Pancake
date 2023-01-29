@@ -325,39 +325,81 @@ class Mixedlist extends StatelessWidget {
     return FutureBuilder(
       future: futre,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data != null) {
-          return SizedBox(
-            height: 190,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                itemCount: snapshot.data.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TVDescription(
-                              id: snapshot.data[index].id,
-                            )),
-                      );
-                    },
-                    child: Container(
-                      width: 115,
-                      margin:
-                      const EdgeInsets.only(left: 10, right: 5, bottom: 10),
-                      child: ClipRRect(
-                        borderRadius:
-                        const BorderRadius.all(Radius.circular(5.0)),
-                        child: Image.network(
-                          'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
-                          fit: BoxFit.cover,
+        if (snapshot.hasData) {
+          return Column(
+            children: [
+              const CustomBar(str1: 'Favorite', str2: 'List',),
+              SizedBox(
+                height: 190,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.data.favorite.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TVDescription(
+                                  id: snapshot.data.favorite[index].id,
+                                )),
+                          );
+                        },
+                        child: Container(
+                          width: 115,
+                          margin:
+                          const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                          child: ClipRRect(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(5.0)),
+                            child: Image.network(
+                              'https://image.tmdb.org/t/p/w500/${snapshot.data.favorite[index].image}',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                  );
-                }),
+                      );
+                    }),
+              ),
+              const CustomBar(
+                str1: 'Watchlist',
+                str2: 'List',
+              ),
+              SizedBox(
+                height: 190,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: snapshot.data.watchlist.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => TVDescription(
+                                  id: snapshot.data.watchlist[index].id,
+                                )),
+                          );
+                        },
+                        child: Container(
+                          width: 115,
+                          margin:
+                          const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                          child: ClipRRect(
+                            borderRadius:
+                            const BorderRadius.all(Radius.circular(5.0)),
+                            child: Image.network(
+                              'https://image.tmdb.org/t/p/w500/${snapshot.data.watchlist[index].image}',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+            ],
           );
         } else {
           return SizedBox(

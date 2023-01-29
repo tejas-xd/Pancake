@@ -7,6 +7,8 @@ import 'package:pancake/shared/customvalues.dart';
 import 'package:pancake/shared/customwidgets.dart';
 import 'package:pancake/shared/watch_tv.dart';
 
+import '../data_handling/models/user.dart';
+
 class TVDescription extends StatefulWidget {
   final int id;
 
@@ -32,6 +34,44 @@ class _TVDescriptionState extends State<TVDescription> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               var size = MediaQuery.of(context).size;
               if (snapshot.hasData) {
+                Future<Users?> readUser() async {
+                  final docuser = FirebaseFirestore.instance
+                      .collection('Users')
+                      .doc(FirebaseAuth.instance.currentUser!.uid);
+                  final snapshot = await docuser.get();
+                  if (snapshot.exists) {
+                    return Users.fromJson(snapshot.data()!);
+                  }
+                }
+
+                Future<bool> isfavorite() async {
+                  Users? test = await readUser();
+                  int a = 0;
+                  for (int i = 0; i < test!.favorite!.length; i++) {
+                    if (test!.favorite![i].id == widget.id) {
+                      a = 1;
+                    }
+                  }
+                  if (a == 0) {
+                    return false;
+                  }
+                  return true;
+                }
+
+                Future<bool> iswatchlist() async {
+                  Users? test = await readUser();
+                  int a = 0;
+                  for (int i = 0; i < test!.watchlist!.length; i++) {
+                    if (test!.watchlist![i].id == widget.id) {
+                      a = 1;
+                    }
+                  }
+                  if (a == 0) {
+                    return false;
+                  }
+                  return true;
+                }
+
                 int x = (widget.i == -1)
                     ? snapshot.data.seasons[0].seasonNumber
                     : widget.i;
@@ -100,6 +140,7 @@ class _TVDescriptionState extends State<TVDescription> {
                     (snapshot.data.voteAverage.toString().length < 3)
                         ? snapshot.data.voteAverage.toString()
                         : snapshot.data.voteAverage.toString().substring(0, 3);
+                String image = snapshot.data.backdropPath;
                 return ListView(padding: EdgeInsets.zero, children: [
                   Stack(children: [
                     ClipRRect(
@@ -159,67 +200,154 @@ class _TVDescriptionState extends State<TVDescription> {
                                 )
                               ],
                             ),
-                            InkWell(
-                              onTap: (){
-                                FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                  'favorite' : FieldValue.arrayUnion([
-                                    {
-                                      'id': widget.id,
-                                      'type': 'tv',
-                                      'image': snapshot.data.posterPath
-                                    }
-                                  ]),
-                                });
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.favorite_border_outlined,
-                                    color: Colors.redAccent,
-                                    size: 25.0,
-                                  ),
-                                  Text(
-                                    ' favorite ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
+                            FutureBuilder(
+                              future: isfavorite(),
+                              builder:
+                                  (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (snapshot.data == true) {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'favorite': FieldValue.arrayRemove([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'movie',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        } else {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'favorite': FieldValue.arrayUnion([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'movie',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        }
+                                      });
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        (snapshot.data == true)
+                                            ? Icon(
+                                          Icons.favorite,
+                                          color: Colors.redAccent,
+                                          size: 25.0,
+                                        )
+                                            : Icon(
+                                          Icons.favorite_border_outlined,
+                                          color: Colors.redAccent,
+                                          size: 25.0,
+                                        ),
+                                        Text(
+                                          ' favorite ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              },
                             ),
-                            InkWell(
-                              onTap: (){
-                                FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                  'watchlist' : FieldValue.arrayUnion([
-                                    {
-                                      'id': widget.id,
-                                      'type': 'tv',
-                                      'image': snapshot.data.posterPath
-                                    }
-                                  ]),
-                                });
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.watch_later_outlined,
-                                    color: Colors.greenAccent,
-                                    size: 25.0,
-                                  ),
-                                  Text(
-                                    ' watchlist ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
+                            FutureBuilder(
+                              future: iswatchlist(),
+                              builder:
+                                  (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (snapshot.data == true) {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'watchlist': FieldValue.arrayRemove([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'movie',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        } else {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'watchlist': FieldValue.arrayUnion([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'movie',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        }
+                                      });
+                                    },
+                                    child: (snapshot.data)?Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.watch_later_outlined,
+                                          color: Colors.greenAccent,
+                                          size: 25.0,
+                                        ),
+                                        Text(
+                                          ' remove ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        )
+                                      ],
+                                    ):Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.add_circle_outline,
+                                          color: Colors.white,
+                                          size: 25.0,
+                                        ),
+                                        Text(
+                                          ' watchlist ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              },
                             ),
                           ],
                         ),

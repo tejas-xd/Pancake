@@ -17,18 +17,35 @@ class GoogleSignInProvider extends ChangeNotifier {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    await FirebaseAuth.instance.signInWithCredential(credential).then((value) => {
-      FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).set({
-        'name' : FirebaseAuth.instance.currentUser!.displayName,
-        'Email' : FirebaseAuth.instance.currentUser!.email,
+    await FirebaseAuth.instance.signInWithCredential(credential).then((value) async {
 
-      }),
-      FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
-        'watchlist' : FieldValue.arrayUnion([]),
-        'favorite'  : FieldValue.arrayUnion([]),
-      }),
+      Future<bool> doesUserExist() async {
+        final snapshot = await FirebaseFirestore.instance
+            .collection('Users')
+            .where("Email", isEqualTo: FirebaseAuth.instance.currentUser!.email!)
+            .get();
+        return snapshot.docs.isNotEmpty;
+      }
+
+      Future<void> startcollection () async
+      {
+        bool condition = await doesUserExist();
+        if (condition == false){
+          FirebaseFirestore.instance.collection("Users").doc(
+              FirebaseAuth.instance.currentUser!.uid).set({
+            'name': FirebaseAuth.instance.currentUser!.displayName,
+            'Email': FirebaseAuth.instance.currentUser!.email,
+            'watchlist': FieldValue.arrayUnion([]),
+            'favorite': FieldValue.arrayUnion([]),
+
+          });
+        }
+      }
+
+
+      startcollection();
+
     });
-
     notifyListeners();
   }
 

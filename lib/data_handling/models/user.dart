@@ -1,13 +1,13 @@
 
-class User {
+class Users {
   String? email;
   String? name;
   List<Favorite>? favorite;
   List<Favorite>? watchlist;
 
-  User({this.email, this.name, this.favorite, this.watchlist});
+  Users({this.email, this.name, this.favorite, this.watchlist});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Users.fromJson(Map<String, dynamic> json) {
     email = json['Email'];
     name = json['name'];
     if (json['favorite'] != null) {
