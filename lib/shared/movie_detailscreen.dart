@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/shared/customvalues.dart';
@@ -94,41 +96,67 @@ class MovieDescription extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.favorite_border_outlined,
-                                    color: Colors.redAccent,
-                                    size: 25.0,
-                                  ),
-                                  Text(
-                                    ' favorite ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
+                              InkWell(
+                                onTap: (){
+                                  FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                    'favorite' : FieldValue.arrayUnion([
+                                      {
+                                        'id': id,
+                                        'type': 'movie',
+                                        'image': snapshot.data.posterPath
+                                      }
+                                    ]),
+                                  });
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(
+                                      Icons.favorite_border_outlined,
+                                      color: Colors.redAccent,
+                                      size: 25.0,
                                     ),
-                                  )
-                                ],
+                                    Text(
+                                      ' favorite ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.watch_later_outlined,
-                                    color: Colors.greenAccent,
-                                    size: 25.0,
-                                  ),
-                                  Text(
-                                    ' watchlist ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
+                              InkWell(
+                                onTap: (){
+                                  FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                    'watchlist' : FieldValue.arrayUnion([
+                                      {
+                                        'id': id,
+                                        'type': 'movie',
+                                        'image': snapshot.data.posterPath
+                                      }
+                                    ]),
+                                  });
+                                },
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(
+                                      Icons.watch_later_outlined,
+                                      color: Colors.greenAccent,
+                                      size: 25.0,
                                     ),
-                                  )
-                                ],
+                                    Text(
+                                      ' watchlist ',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
 
                             ],
