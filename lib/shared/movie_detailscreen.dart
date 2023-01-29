@@ -84,7 +84,7 @@ class _MovieDescriptionState extends State<MovieDescription> {
                     (snapshot.data.voteAverage.toString().length < 3)
                         ? snapshot.data.voteAverage.toString()
                         : snapshot.data.voteAverage.toString().substring(0, 3);
-                String image = snapshot.data.backdropPath;
+                String image = snapshot.data.posterPath;
                 return ListView(padding: EdgeInsets.zero, children: [
                   Stack(children: [
                     ClipRRect(
@@ -103,7 +103,7 @@ class _MovieDescriptionState extends State<MovieDescription> {
                                 borderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(50)),
                                 child: Image.network(
-                                  'https://image.tmdb.org/t/p/original/${snapshot.data.posterPath}',
+                                  'https://image.tmdb.org/t/p/original/${snapshot.data.backdropPath}',
                                   fit: BoxFit.cover,
                                 ),
                               ),

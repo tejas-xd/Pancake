@@ -140,7 +140,7 @@ class _TVDescriptionState extends State<TVDescription> {
                     (snapshot.data.voteAverage.toString().length < 3)
                         ? snapshot.data.voteAverage.toString()
                         : snapshot.data.voteAverage.toString().substring(0, 3);
-                String image = snapshot.data.backdropPath;
+                String image = snapshot.data.posterPath;
                 return ListView(padding: EdgeInsets.zero, children: [
                   Stack(children: [
                     ClipRRect(
@@ -217,7 +217,7 @@ class _TVDescriptionState extends State<TVDescription> {
                                             'favorite': FieldValue.arrayRemove([
                                               {
                                                 'id': widget.id,
-                                                'type': 'movie',
+                                                'type': 'tv',
                                                 'image': image
                                               }
                                             ]),
@@ -231,7 +231,7 @@ class _TVDescriptionState extends State<TVDescription> {
                                             'favorite': FieldValue.arrayUnion([
                                               {
                                                 'id': widget.id,
-                                                'type': 'movie',
+                                                'type': 'tv',
                                                 'image': image
                                               }
                                             ]),
@@ -286,7 +286,7 @@ class _TVDescriptionState extends State<TVDescription> {
                                             'watchlist': FieldValue.arrayRemove([
                                               {
                                                 'id': widget.id,
-                                                'type': 'movie',
+                                                'type': 'tv',
                                                 'image': image
                                               }
                                             ]),
@@ -300,7 +300,7 @@ class _TVDescriptionState extends State<TVDescription> {
                                             'watchlist': FieldValue.arrayUnion([
                                               {
                                                 'id': widget.id,
-                                                'type': 'movie',
+                                                'type': 'tv',
                                                 'image': image
                                               }
                                             ]),

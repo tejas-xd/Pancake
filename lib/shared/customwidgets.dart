@@ -341,9 +341,9 @@ class Mixedlist extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TVDescription(
+                                builder: (context) => (snapshot.data.favorite[index].type == 'tv')?TVDescription(
                                   id: snapshot.data.favorite[index].id,
-                                )),
+                                ):MovieDescription(id: snapshot.data.favorite[index].id,)),
                           );
                         },
                         child: Container(
@@ -378,9 +378,9 @@ class Mixedlist extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TVDescription(
+                                builder: (context) => (snapshot.data.watchlist[index].type == 'tv')?TVDescription(
                                   id: snapshot.data.watchlist[index].id,
-                                )),
+                                ):MovieDescription(id: snapshot.data.watchlist[index].id,)),
                           );
                         },
                         child: Container(
