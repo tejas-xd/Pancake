@@ -125,7 +125,7 @@ class _SearchscreenbodyState extends State<Searchscreenbody> {
           ],
         ),
         Container(
-          margin: const EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 5),
           height: size.height * 0.8,
           child: (query=="")?Genrelist(media: mediatype,):((mediatype=='movie')?GridViewDatamovie(future: ApiService().getMovieBySearch(query, 'movie')):GridViewDatatv(future: ApiService().getTVBySearch(query, 'tv'))),
         )

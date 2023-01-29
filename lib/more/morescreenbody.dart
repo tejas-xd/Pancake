@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/shared/customwidgets.dart';
 import 'package:provider/provider.dart';
-import 'package:pancake/data_handling/models/user.dart';
-
 import '../googlesignin.dart';
 
 class Morescreenbody extends StatefulWidget {
@@ -16,18 +13,10 @@ class Morescreenbody extends StatefulWidget {
 }
 
 class _MorescreenbodyState extends State<Morescreenbody> {
+
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
-
-  Future<Users?> readUser() async {
-    final docuser = FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid);
-    final snapshot = await docuser.get();
-    if(snapshot.exists)
-      {
-        return Users.fromJson(snapshot.data()!);
-      }
-  }
-
-   final user = FirebaseAuth.instance.currentUser!;
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Column(
@@ -89,7 +78,7 @@ class _MorescreenbodyState extends State<Morescreenbody> {
           height: 20,
         ),
         Mixedlist(
-          futre: readUser(),
+          futre: ApiService().readUser(),
         ),
         const SizedBox(
           height: 20,

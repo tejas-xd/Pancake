@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +45,7 @@ class _MovieDescriptionState extends State<MovieDescription> {
                   Users? test = await readUser();
                   int a = 0;
                   for (int i = 0; i < test!.favorite!.length; i++) {
-                    if (test!.favorite![i].id == widget.id) {
+                    if (test.favorite![i].id == widget.id) {
                       a = 1;
                     }
                   }
@@ -61,7 +59,7 @@ class _MovieDescriptionState extends State<MovieDescription> {
                   Users? test = await readUser();
                   int a = 0;
                   for (int i = 0; i < test!.watchlist!.length; i++) {
-                    if (test!.watchlist![i].id == widget.id) {
+                    if (test.watchlist![i].id == widget.id) {
                       a = 1;
                     }
                   }
@@ -126,25 +124,23 @@ class _MovieDescriptionState extends State<MovieDescription> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                  size: 25.0,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                                size: 25.0,
+                              ),
+                              Text(
+                                '$rating/10',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w300,
                                 ),
-                                Text(
-                                  '$rating/10',
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
                           FutureBuilder(
                             future: isfavorite(),
@@ -189,17 +185,17 @@ class _MovieDescriptionState extends State<MovieDescription> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       (snapshot.data == true)
-                                          ? Icon(
+                                          ? const Icon(
                                               Icons.favorite,
                                               color: Colors.redAccent,
                                               size: 25.0,
                                             )
-                                          : Icon(
+                                          : const Icon(
                                               Icons.favorite_border_outlined,
                                               color: Colors.redAccent,
                                               size: 25.0,
                                             ),
-                                      Text(
+                                      const Text(
                                         ' favorite ',
                                         style: TextStyle(
                                           color: Colors.white,

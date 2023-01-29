@@ -29,9 +29,7 @@ class Mixed {
     backdropPath = json['backdrop_path'];
     id = json['id'];
     title = json['title'];
-    if (title == null) {
-      title = json['name'];
-    }
+    title ??= json['name'];
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
     if (title == null) {
@@ -44,25 +42,25 @@ class Mixed {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['adult'] = adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['id'] = this.id;
-    data['title'] = this.title;
+    data['backdrop_path'] = backdropPath;
+    data['id'] = id;
+    data['title'] = title;
     if (title == null) {
-      data['name'] = this.title;
+      data['name'] = title;
     }
 
-    data['original_language'] = this.originalLanguage;
-    data['original_title'] = this.originalTitle;
+    data['original_language'] = originalLanguage;
+    data['original_title'] = originalTitle;
     if (title == null) {
-      data['original_name'] = this.originalTitle;
+      data['original_name'] = originalTitle;
     }
 
-    data['overview'] = this.overview;
-    data['poster_path'] = this.posterPath;
-    data['media_type'] = this.mediaType;
-    data['vote_average'] = this.voteAverage;
+    data['overview'] = overview;
+    data['poster_path'] = posterPath;
+    data['media_type'] = mediaType;
+    data['vote_average'] = voteAverage;
     return data;
   }
 }
@@ -97,14 +95,14 @@ class Movie {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['original_language'] = this.originalLanguage;
-    data['original_title'] = this.originalTitle;
-    data['poster_path'] = this.posterPath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    data['id'] = id;
+    data['title'] = title;
+    data['original_language'] = originalLanguage;
+    data['original_title'] = originalTitle;
+    data['poster_path'] = posterPath;
     return data;
   }
 }
@@ -139,14 +137,14 @@ class TVshow {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['original_language'] = this.originalLanguage;
-    data['original_name'] = this.originalName;
-    data['poster_path'] = this.posterPath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    data['id'] = id;
+    data['name'] = name;
+    data['original_language'] = originalLanguage;
+    data['original_name'] = originalName;
+    data['poster_path'] = posterPath;
     return data;
   }
 }
@@ -163,9 +161,9 @@ class Genre {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }
@@ -184,8 +182,8 @@ class TVimbd {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     return data;
   }
 }
@@ -216,7 +214,7 @@ class Seasondata {
     if (json['episodes'] != null) {
       episodes = <Episodes>[];
       json['episodes'].forEach((v) {
-        episodes!.add(new Episodes.fromJson(v));
+        episodes!.add(Episodes.fromJson(v));
       });
     }
     name = json['name'];
@@ -227,17 +225,17 @@ class Seasondata {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['air_date'] = this.airDate;
-    if (this.episodes != null) {
-      data['episodes'] = this.episodes!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['air_date'] = airDate;
+    if (episodes != null) {
+      data['episodes'] = episodes!.map((v) => v.toJson()).toList();
     }
-    data['name'] = this.name;
-    data['overview'] = this.overview;
-    data['id'] = this.id;
-    data['poster_path'] = this.posterPath;
-    data['season_number'] = this.seasonNumber;
+    data['name'] = name;
+    data['overview'] = overview;
+    data['id'] = id;
+    data['poster_path'] = posterPath;
+    data['season_number'] = seasonNumber;
     return data;
   }
 }
@@ -290,36 +288,36 @@ class Episodes {
     if (json['crew'] != null) {
       crew = <Crew>[];
       json['crew'].forEach((v) {
-        crew!.add(new Crew.fromJson(v));
+        crew!.add(Crew.fromJson(v));
       });
     }
     if (json['guest_stars'] != null) {
       guestStars = <GuestStars>[];
       json['guest_stars'].forEach((v) {
-        guestStars!.add(new GuestStars.fromJson(v));
+        guestStars!.add(GuestStars.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['air_date'] = this.airDate;
-    data['episode_number'] = this.episodeNumber;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['overview'] = this.overview;
-    data['production_code'] = this.productionCode;
-    data['runtime'] = this.runtime;
-    data['season_number'] = this.seasonNumber;
-    data['show_id'] = this.showId;
-    data['still_path'] = this.stillPath;
-    data['vote_average'] = this.voteAverage;
-    data['vote_count'] = this.voteCount;
-    if (this.crew != null) {
-      data['crew'] = this.crew!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['air_date'] = airDate;
+    data['episode_number'] = episodeNumber;
+    data['id'] = id;
+    data['name'] = name;
+    data['overview'] = overview;
+    data['production_code'] = productionCode;
+    data['runtime'] = runtime;
+    data['season_number'] = seasonNumber;
+    data['show_id'] = showId;
+    data['still_path'] = stillPath;
+    data['vote_average'] = voteAverage;
+    data['vote_count'] = voteCount;
+    if (crew != null) {
+      data['crew'] = crew!.map((v) => v.toJson()).toList();
     }
-    if (this.guestStars != null) {
-      data['guest_stars'] = this.guestStars!.map((v) => v.toJson()).toList();
+    if (guestStars != null) {
+      data['guest_stars'] = guestStars!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -366,18 +364,18 @@ class Crew {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['department'] = this.department;
-    data['job'] = this.job;
-    data['credit_id'] = this.creditId;
-    data['adult'] = this.adult;
-    data['gender'] = this.gender;
-    data['id'] = this.id;
-    data['known_for_department'] = this.knownForDepartment;
-    data['name'] = this.name;
-    data['original_name'] = this.originalName;
-    data['popularity'] = this.popularity;
-    data['profile_path'] = this.profilePath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['department'] = department;
+    data['job'] = job;
+    data['credit_id'] = creditId;
+    data['adult'] = adult;
+    data['gender'] = gender;
+    data['id'] = id;
+    data['known_for_department'] = knownForDepartment;
+    data['name'] = name;
+    data['original_name'] = originalName;
+    data['popularity'] = popularity;
+    data['profile_path'] = profilePath;
     return data;
   }
 }
@@ -423,18 +421,18 @@ class GuestStars {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['character'] = this.character;
-    data['credit_id'] = this.creditId;
-    data['order'] = this.order;
-    data['adult'] = this.adult;
-    data['gender'] = this.gender;
-    data['id'] = this.id;
-    data['known_for_department'] = this.knownForDepartment;
-    data['name'] = this.name;
-    data['original_name'] = this.originalName;
-    data['popularity'] = this.popularity;
-    data['profile_path'] = this.profilePath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['character'] = character;
+    data['credit_id'] = creditId;
+    data['order'] = order;
+    data['adult'] = adult;
+    data['gender'] = gender;
+    data['id'] = id;
+    data['known_for_department'] = knownForDepartment;
+    data['name'] = name;
+    data['original_name'] = originalName;
+    data['popularity'] = popularity;
+    data['profile_path'] = profilePath;
     return data;
   }
 }

@@ -2,20 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
-import 'package:pancake/data_handling/models/tvdetail.dart';
 import 'package:pancake/shared/customvalues.dart';
 import 'package:pancake/shared/customwidgets.dart';
-import 'package:pancake/shared/watch_tv.dart';
-
 import '../data_handling/models/user.dart';
 
 class TVDescription extends StatefulWidget {
   final int id;
 
-  TVDescription({
-    Key? key,
-    required this.id,
-  }) : super(key: key);
+  TVDescription({Key? key, required this.id,}) : super(key: key);
   String select = '';
   late int i = -1;
   @override
@@ -48,7 +42,7 @@ class _TVDescriptionState extends State<TVDescription> {
                   Users? test = await readUser();
                   int a = 0;
                   for (int i = 0; i < test!.favorite!.length; i++) {
-                    if (test!.favorite![i].id == widget.id) {
+                    if (test.favorite![i].id == widget.id) {
                       a = 1;
                     }
                   }
@@ -62,7 +56,7 @@ class _TVDescriptionState extends State<TVDescription> {
                   Users? test = await readUser();
                   int a = 0;
                   for (int i = 0; i < test!.watchlist!.length; i++) {
-                    if (test!.watchlist![i].id == widget.id) {
+                    if (test.watchlist![i].id == widget.id) {
                       a = 1;
                     }
                   }
@@ -152,7 +146,7 @@ class _TVDescriptionState extends State<TVDescription> {
                               width: double.infinity,
                               color: mode,
                             )
-                          : Container(
+                          : SizedBox(
                               height: size.height * 0.4,
                               width: double.infinity,
                               child: ClipRRect(
@@ -243,17 +237,17 @@ class _TVDescriptionState extends State<TVDescription> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         (snapshot.data == true)
-                                            ? Icon(
+                                            ? const Icon(
                                           Icons.favorite,
                                           color: Colors.redAccent,
                                           size: 25.0,
                                         )
-                                            : Icon(
+                                            : const Icon(
                                           Icons.favorite_border_outlined,
                                           color: Colors.redAccent,
                                           size: 25.0,
                                         ),
-                                        Text(
+                                        const Text(
                                           ' favorite ',
                                           style: TextStyle(
                                             color: Colors.white,
@@ -426,7 +420,7 @@ class _TVDescriptionState extends State<TVDescription> {
                           )),
                     ],
                   ),
-                  Container(
+                  SizedBox(
                     width: size.width,
                     height: 150,
                     child: Seasonlist(

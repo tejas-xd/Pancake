@@ -109,7 +109,6 @@ class GridViewDatatv extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return FutureBuilder(
       future: future,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -196,13 +195,13 @@ class GridViewDatatv extends StatelessWidget {
 }
 
 class GridPage extends StatelessWidget {
-  GridPage(
+  const GridPage(
       {Key? key, required this.title, required this.future, required this.type})
       : super(key: key);
 
-  String title;
-  Future future;
-  String type;
+  final String title;
+  final Future future;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -231,7 +230,7 @@ class GridPage extends StatelessWidget {
                       letterSpacing: 2),
                 )),
           ),
-          body: Container(
+          body: SizedBox(
             height: size.height * 0.9,
             child: (type == 'movie')
                 ? (GridViewDatamovie(future: future))

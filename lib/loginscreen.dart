@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pancake/googlesignin.dart';
 import 'package:provider/provider.dart';
-import 'googlesignin.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
+            SizedBox(
               width: 300,
               height: 300,
               child: ClipRRect(

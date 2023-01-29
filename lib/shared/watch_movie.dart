@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pancake/data_handling/apiservices.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
-
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewExample extends StatefulWidget {
@@ -26,8 +24,6 @@ class WebViewExampleState extends State<WebViewExample> {
 
   @override
   Widget build(BuildContext context) {
-
-    print(widget.id);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: WebView(

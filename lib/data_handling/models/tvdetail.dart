@@ -40,7 +40,7 @@ class TVdetail {
     if (json['genres'] != null) {
       genres = <Genres>[];
       json['genres'].forEach((v) {
-        genres!.add(new Genres.fromJson(v));
+        genres!.add(Genres.fromJson(v));
       });
     }
     id = json['id'];
@@ -54,7 +54,7 @@ class TVdetail {
     if (json['seasons'] != null) {
       seasons = <Seasons>[];
       json['seasons'].forEach((v) {
-        seasons!.add(new Seasons.fromJson(v));
+        seasons!.add(Seasons.fromJson(v));
       });
     }
     status = json['status'];
@@ -63,26 +63,26 @@ class TVdetail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['first_air_date'] = this.firstAirDate;
-    if (this.genres != null) {
-      data['genres'] = this.genres!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    data['first_air_date'] = firstAirDate;
+    if (genres != null) {
+      data['genres'] = genres!.map((v) => v.toJson()).toList();
     }
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['number_of_episodes'] = this.numberOfEpisodes;
-    data['number_of_seasons'] = this.numberOfSeasons;
-    data['original_name'] = this.originalName;
-    data['overview'] = this.overview;
-    data['poster_path'] = this.posterPath;
-    if (this.seasons != null) {
-      data['seasons'] = this.seasons!.map((v) => v.toJson()).toList();
+    data['id'] = id;
+    data['name'] = name;
+    data['number_of_episodes'] = numberOfEpisodes;
+    data['number_of_seasons'] = numberOfSeasons;
+    data['original_name'] = originalName;
+    data['overview'] = overview;
+    data['poster_path'] = posterPath;
+    if (seasons != null) {
+      data['seasons'] = seasons!.map((v) => v.toJson()).toList();
     }
-    data['status'] = this.status;
-    data['type'] = this.type;
-    data['vote_average'] = this.voteAverage;
+    data['status'] = status;
+    data['type'] = type;
+    data['vote_average'] = voteAverage;
     return data;
   }
 }
@@ -101,9 +101,9 @@ class Genres {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }
@@ -137,14 +137,14 @@ class Seasons {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['air_date'] = this.airDate;
-    data['episode_count'] = this.episodeCount;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['overview'] = this.overview;
-    data['poster_path'] = this.posterPath;
-    data['season_number'] = this.seasonNumber;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['air_date'] = airDate;
+    data['episode_count'] = episodeCount;
+    data['id'] = id;
+    data['name'] = name;
+    data['overview'] = overview;
+    data['poster_path'] = posterPath;
+    data['season_number'] = seasonNumber;
     return data;
   }
 }

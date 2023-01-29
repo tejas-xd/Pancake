@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 import 'package:pancake/data_handling/models/models.dart';
 import 'package:pancake/data_handling/models/moviedetail.dart';
 import 'package:pancake/data_handling/models/tvdetail.dart';
+
+import 'models/user.dart';
 
 
 
@@ -211,8 +215,8 @@ class ApiService {
       final url = '$baseUrl/tv/$id/recommendations?$apiKey';
       final response = await _dio.get(url);
       var tv = response.data['results'] as List;
-      List<TVshow> TvList = tv.map((m) => TVshow.fromJson(m)).toList();
-      return TvList;
+      List<TVshow> tvList = tv.map((m) => TVshow.fromJson(m)).toList();
+      return tvList;
     } catch (error, stacktrace) {
       throw Exception(
           'Exception accoured: $error with stacktrace: $stacktrace');
@@ -293,6 +297,15 @@ class ApiService {
     } catch (error, stacktrace) {
       throw Exception(
           'Exception accoured: $error with stacktrace: $stacktrace');
+    }
+  }
+
+  Future<Users?> readUser() async {
+    final docuser = FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid);
+    final snapshot = await docuser.get();
+    if(snapshot.exists)
+    {
+      return Users.fromJson(snapshot.data()!);
     }
   }
 
