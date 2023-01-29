@@ -1,18 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:pancake/homescreen.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'googlesignin.dart';
+import 'package:pancake/homescreen.dart';
 import 'package:pancake/loginscreen.dart';
 import 'package:pancake/shared/customvalues.dart';
-import 'package:provider/provider.dart';
 
-import 'googlesignin.dart';
+
 
 //ver 2
 Future<void> main() async {
-
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -61,9 +62,9 @@ class Main extends StatelessWidget {
             );
           }
           if (snapshot.hasData) {
-            return Homescreen();
+            return const Homescreen();
           } else {
-            return LoginScreen();
+            return const LoginScreen();
           }
         },
       ),

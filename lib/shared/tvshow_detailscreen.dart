@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/data_handling/models/tvdetail.dart';
@@ -127,77 +129,100 @@ class _TVDescriptionState extends State<TVDescription> {
                           top: size.height * 0.36,
                           left: size.width * 0.2,
                           bottom: 30),
-                      height: size.height * 0.08,
-                      width: size.width * 0.8,
                       decoration: const BoxDecoration(
                         color: Colors.blueGrey,
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(50),
                             topLeft: Radius.circular(50)),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 25.0,
+                      child: Container(
+                        margin: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                  size: 25.0,
+                                ),
+                                Text(
+                                  ' $rating / 10',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                )
+                              ],
+                            ),
+                            InkWell(
+                              onTap: (){
+                                FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                  'favorite' : FieldValue.arrayUnion([
+                                    {
+                                      'id': widget.id,
+                                      'type': 'tv',
+                                      'image': snapshot.data.posterPath
+                                    }
+                                  ]),
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.favorite_border_outlined,
+                                    color: Colors.redAccent,
+                                    size: 25.0,
+                                  ),
+                                  Text(
+                                    ' favorite ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  )
+                                ],
                               ),
-                              Text(
-                                ' $rating / 10',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w300,
-                                ),
-                              )
-                            ],
-                          ),
-                          Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(
-                                  Icons.favorite_border_outlined,
-                                  color: Colors.redAccent,
-                                  size: 25.0,
-                                ),
-                                Text(
-                                  ' favorite ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                )
-                              ],
                             ),
-                          ),
-                          Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(
-                                  Icons.watch_later_outlined,
-                                  color: Colors.greenAccent,
-                                  size: 25.0,
-                                ),
-                                Text(
-                                  ' watchlist ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
+                            InkWell(
+                              onTap: (){
+                                FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                  'watchlist' : FieldValue.arrayUnion([
+                                    {
+                                      'id': widget.id,
+                                      'type': 'tv',
+                                      'image': snapshot.data.posterPath
+                                    }
+                                  ]),
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Icon(
+                                    Icons.watch_later_outlined,
+                                    color: Colors.greenAccent,
+                                    size: 25.0,
                                   ),
-                                )
-                              ],
+                                  Text(
+                                    ' watchlist ',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
                     )
                   ]),

@@ -5,221 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/shared/movie_detailscreen.dart';
 import 'package:pancake/shared/tvshow_detailscreen.dart';
-import 'package:pancake/data_handling/models/models.dart';
 import 'package:pancake/shared/watch_tv.dart';
 import 'customgridview.dart';
 
 
 double dot = 0;
 
-class CustomSlider extends StatelessWidget {
-  CustomSlider(this.future, {super.key});
-  Future<List<Mixed>> future;
-
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: size.width,
-      height: size.height * 0.33,
-      child: FutureBuilder(
-          future: future,
-          builder: ((context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-              return PageView.builder(
-                scrollDirection: Axis.horizontal,
-                physics: const BouncingScrollPhysics(),
-                pageSnapping: true,
-                itemCount: snapshot.data.length,
-                itemBuilder: ((context, index) {
-                  return InkWell(
-                    onTap: () {
-                      if (snapshot.data[index].mediaType == 'movie') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MovieDescription(
-                                    id: snapshot.data[index].id,
-                                  )),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TVDescription(
-                                    id: snapshot.data[index].id,
-                                  )),
-                        );
-                      }
-                    },
-                    child: SizedBox(
-                      height: size.height * 0.33,
-                      width: size.width,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: size.width,
-                            height: size.height * 0.33,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        'https://image.tmdb.org/t/p/original/${snapshot.data[index].backdropPath}'))),
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  begin: Alignment.center,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Colors.transparent,
-                                    Colors.black.withOpacity(0.50),
-                                    Colors.black.withOpacity(0.75),
-                                    Colors.black
-                                  ]),
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(
-                                top: size.height * 0.28, left: 15),
-                            width: size.width * 0.6,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 4),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(color: Colors.redAccent)),
-                            child: Text(
-                              snapshot.data[index].title,
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 5,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-              );
-            } else {
-              return PageView.builder(
-                  itemCount: 1,
-                  itemBuilder: ((context, index) {
-                    return Container();
-                  }));
-            }
-          })),
-    );
-  }
-}
-
-class HorizontalSlider extends StatefulWidget {
-  const HorizontalSlider({super.key});
-
-  @override
-  State<HorizontalSlider> createState() => _HorizontalSliderState();
-}
-
-class _HorizontalSliderState extends State<HorizontalSlider> {
-  @override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return Container(
-        height: size.height * 0.335,
-        child: Column(
-          children: [
-            FutureBuilder(
-                future: ApiService().getTrendingAll(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-                  if (snapshot.hasData) {
-                    return CarouselSlider.builder(
-                      options: CarouselOptions(
-                        viewportFraction: 0.85,
-                        aspectRatio: 1.6,
-                        enlargeStrategy: CenterPageEnlargeStrategy.scale,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            dot = index.toDouble();
-                          });
-                        },
-                        enlargeCenterPage: true,
-                        scrollDirection: Axis.horizontal,
-                        autoPlay: true,
-                      ),
-                      itemCount: 10,
-                      itemBuilder:
-                          (BuildContext context, int index, int realIndex) {
-                        return InkWell(
-                          onTap: () {
-                            if (snapshot.data[index].mediaType == 'movie') {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MovieDescription(
-                                          id: snapshot.data[index].id,
-                                        )),
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TVDescription(
-                                          id: snapshot.data[index].id,
-                                        )),
-                              );
-                            }
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: CachedNetworkImageProvider(
-                                        'https://image.tmdb.org/t/p/original/${snapshot.data[index].backdropPath}'))),
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    return Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        image: const DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/defaultimage.png'),
-                        ),
-                      ),
-                    );
-                  }
-                }),
-            Container(
-              margin: const EdgeInsets.only(
-                top: 10,
-              ),
-              width: size.width,
-              alignment: Alignment.bottomCenter,
-              child: DotsIndicator(
-                dotsCount: 10,
-                position: dot,
-                decorator: DotsDecorator(
-                  activeColor: Colors.blueGrey,
-                  color: Colors.grey,
-                  size: const Size.square(9.0),
-                  activeSize: const Size(18.0, 9.0),
-                  activeShape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0)),
-                ),
-              ),
-            ),
-          ],
-        ));
-  }
-}
 
 class HorizontalSliderX extends StatefulWidget {
   const HorizontalSliderX({Key? key}) : super(key: key);
@@ -521,9 +312,83 @@ class TVlist extends StatelessWidget {
   }
 }
 
+class Mixedlist extends StatelessWidget {
+  const Mixedlist({
+    Key? key,
+    required this.futre,
+  }) : super(key: key);
+
+  final Future futre;
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: futre,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.data != null) {
+          return SizedBox(
+            height: 190,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TVDescription(
+                              id: snapshot.data[index].id,
+                            )),
+                      );
+                    },
+                    child: Container(
+                      width: 115,
+                      margin:
+                      const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                      child: ClipRRect(
+                        borderRadius:
+                        const BorderRadius.all(Radius.circular(5.0)),
+                        child: Image.network(
+                          'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          );
+        } else {
+          return SizedBox(
+            height: 190,
+            child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                separatorBuilder: (context, index) => const SizedBox(width: 2),
+                itemBuilder: (context, index) {
+                  return Container(
+                    width: 115,
+                    margin:
+                    const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                    child: ClipRRect(
+                      borderRadius:
+                      const BorderRadius.all(Radius.circular(5.0)),
+                      child: Image.asset('assets/defaultimage.png',
+                          fit: BoxFit.cover),
+                    ),
+                  );
+                }),
+          );
+        }
+      },
+    );
+  }
+}
+
 class Genrelist extends StatelessWidget {
-  Genrelist({Key? key, required this.media}) : super(key: key);
-  String media;
+  const Genrelist({Key? key, required this.media}) : super(key: key);
+  final String media;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -592,11 +457,10 @@ class Genrelist extends StatelessWidget {
 }
 
 class Seasonlist extends StatelessWidget {
-  Seasonlist({Key? key, required this.season, required this.id})
-      : super(key: key);
+  const Seasonlist({Key? key, required this.season, required this.id}) : super(key: key);
 
-  String id;
-  String season;
+  final String id;
+  final String season;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -643,6 +507,7 @@ class Seasonlist extends StatelessWidget {
                             ),
                           ),
                           Align(
+                            alignment: Alignment.bottomLeft,
                             child: Text(
                               "  Episode-${snapshot.data[index].episodeNumber}",
                               style: const TextStyle(
@@ -654,7 +519,6 @@ class Seasonlist extends StatelessWidget {
                                   ]),
                               textAlign: TextAlign.start,
                             ),
-                            alignment: Alignment.bottomLeft,
                           )
                         ],
                       ),
@@ -668,30 +532,237 @@ class Seasonlist extends StatelessWidget {
   }
 }
 
-Widget Card(String title, ImageProvider image) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    crossAxisAlignment: CrossAxisAlignment.center,
-    children: [
-      Container(
-        height: 150,
-        width: 100,
-        margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-        decoration: BoxDecoration(
-          image: DecorationImage(fit: BoxFit.cover, image: image),
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      SizedBox(
-        width: 100,
-        child: Text(
-          title,
-          style: const TextStyle(color: Colors.white),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          textAlign: TextAlign.center,
-        ),
-      )
-    ],
-  );
-}
+// Widget Card(String title, ImageProvider image) {
+//   return Column(
+//     mainAxisAlignment: MainAxisAlignment.center,
+//     crossAxisAlignment: CrossAxisAlignment.center,
+//     children: [
+//       Container(
+//         height: 150,
+//         width: 100,
+//         margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+//         decoration: BoxDecoration(
+//           image: DecorationImage(fit: BoxFit.cover, image: image),
+//           borderRadius: BorderRadius.circular(10),
+//         ),
+//       ),
+//       SizedBox(
+//         width: 100,
+//         child: Text(
+//           title,
+//           style: const TextStyle(color: Colors.white),
+//           maxLines: 1,
+//           overflow: TextOverflow.ellipsis,
+//           textAlign: TextAlign.center,
+//         ),
+//       )
+//     ],
+//   );
+// }
+// class CustomSlider extends StatelessWidget {
+//   CustomSlider(this.future, {super.key});
+//   Future<List<Mixed>> future;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     var size = MediaQuery.of(context).size;
+//     return SizedBox(
+//       width: size.width,
+//       height: size.height * 0.33,
+//       child: FutureBuilder(
+//           future: future,
+//           builder: ((context, AsyncSnapshot snapshot) {
+//             if (snapshot.hasData) {
+//               return PageView.builder(
+//                 scrollDirection: Axis.horizontal,
+//                 physics: const BouncingScrollPhysics(),
+//                 pageSnapping: true,
+//                 itemCount: snapshot.data.length,
+//                 itemBuilder: ((context, index) {
+//                   return InkWell(
+//                     onTap: () {
+//                       if (snapshot.data[index].mediaType == 'movie') {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => MovieDescription(
+//                                     id: snapshot.data[index].id,
+//                                   )),
+//                         );
+//                       } else {
+//                         Navigator.push(
+//                           context,
+//                           MaterialPageRoute(
+//                               builder: (context) => TVDescription(
+//                                     id: snapshot.data[index].id,
+//                                   )),
+//                         );
+//                       }
+//                     },
+//                     child: SizedBox(
+//                       height: size.height * 0.33,
+//                       width: size.width,
+//                       child: Stack(
+//                         children: [
+//                           Container(
+//                             width: size.width,
+//                             height: size.height * 0.33,
+//                             decoration: BoxDecoration(
+//                                 image: DecorationImage(
+//                                     fit: BoxFit.cover,
+//                                     image: NetworkImage(
+//                                         'https://image.tmdb.org/t/p/original/${snapshot.data[index].backdropPath}'))),
+//                           ),
+//                           Container(
+//                             decoration: BoxDecoration(
+//                               gradient: LinearGradient(
+//                                   begin: Alignment.center,
+//                                   end: Alignment.bottomCenter,
+//                                   colors: [
+//                                     Colors.transparent,
+//                                     Colors.black.withOpacity(0.50),
+//                                     Colors.black.withOpacity(0.75),
+//                                     Colors.black
+//                                   ]),
+//                             ),
+//                           ),
+//                           Container(
+//                             margin: EdgeInsets.only(
+//                                 top: size.height * 0.28, left: 15),
+//                             width: size.width * 0.6,
+//                             padding: const EdgeInsets.symmetric(
+//                                 vertical: 4, horizontal: 4),
+//                             decoration: BoxDecoration(
+//                                 borderRadius: BorderRadius.circular(12),
+//                                 border: Border.all(color: Colors.redAccent)),
+//                             child: Text(
+//                               snapshot.data[index].title,
+//                               style: const TextStyle(
+//                                   color: Colors.white,
+//                                   fontSize: 16,
+//                                   fontWeight: FontWeight.w500,
+//                                   letterSpacing: 5,
+//                                   overflow: TextOverflow.ellipsis),
+//                             ),
+//                           ),
+//                         ],
+//                       ),
+//                     ),
+//                   );
+//                 }),
+//               );
+//             } else {
+//               return PageView.builder(
+//                   itemCount: 1,
+//                   itemBuilder: ((context, index) {
+//                     return Container();
+//                   }));
+//             }
+//           })),
+//     );
+//   }
+// }
+//
+// class HorizontalSlider extends StatefulWidget {
+//   const HorizontalSlider({super.key});
+//
+//   @override
+//   State<HorizontalSlider> createState() => _HorizontalSliderState();
+// }
+// class _HorizontalSliderState extends State<HorizontalSlider> {
+//   @override
+//   Widget build(BuildContext context) {
+//     var size = MediaQuery.of(context).size;
+//     return Container(
+//         height: size.height * 0.335,
+//         child: Column(
+//           children: [
+//             FutureBuilder(
+//                 future: ApiService().getTrendingAll(),
+//                 builder:
+//                     (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+//                   if (snapshot.hasData) {
+//                     return CarouselSlider.builder(
+//                       options: CarouselOptions(
+//                         viewportFraction: 0.85,
+//                         aspectRatio: 1.6,
+//                         enlargeStrategy: CenterPageEnlargeStrategy.scale,
+//                         onPageChanged: (index, reason) {
+//                           setState(() {
+//                             dot = index.toDouble();
+//                           });
+//                         },
+//                         enlargeCenterPage: true,
+//                         scrollDirection: Axis.horizontal,
+//                         autoPlay: true,
+//                       ),
+//                       itemCount: 10,
+//                       itemBuilder:
+//                           (BuildContext context, int index, int realIndex) {
+//                         return InkWell(
+//                           onTap: () {
+//                             if (snapshot.data[index].mediaType == 'movie') {
+//                               Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                     builder: (context) => MovieDescription(
+//                                           id: snapshot.data[index].id,
+//                                         )),
+//                               );
+//                             } else {
+//                               Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                     builder: (context) => TVDescription(
+//                                           id: snapshot.data[index].id,
+//                                         )),
+//                               );
+//                             }
+//                           },
+//                           child: Container(
+//                             decoration: BoxDecoration(
+//                                 borderRadius: BorderRadius.circular(12),
+//                                 image: DecorationImage(
+//                                     fit: BoxFit.cover,
+//                                     image: CachedNetworkImageProvider(
+//                                         'https://image.tmdb.org/t/p/original/${snapshot.data[index].backdropPath}'))),
+//                           ),
+//                         );
+//                       },
+//                     );
+//                   } else {
+//                     return Container(
+//                       height: 200,
+//                       decoration: BoxDecoration(
+//                         borderRadius: BorderRadius.circular(12),
+//                         image: const DecorationImage(
+//                           fit: BoxFit.cover,
+//                           image: AssetImage('assets/defaultimage.png'),
+//                         ),
+//                       ),
+//                     );
+//                   }
+//                 }),
+//             Container(
+//               margin: const EdgeInsets.only(
+//                 top: 10,
+//               ),
+//               width: size.width,
+//               alignment: Alignment.bottomCenter,
+//               child: DotsIndicator(
+//                 dotsCount: 10,
+//                 position: dot,
+//                 decorator: DotsDecorator(
+//                   activeColor: Colors.blueGrey,
+//                   color: Colors.grey,
+//                   size: const Size.square(9.0),
+//                   activeSize: const Size(18.0, 9.0),
+//                   activeShape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(5.0)),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ));
+//   }
+// }
