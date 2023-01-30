@@ -27,7 +27,7 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         extendBody: true,
         body: PageView(
           physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -43,48 +43,42 @@ class _HomescreenState extends State<Homescreen> {
             Morescreenbody(),
           ],
         ),
-        bottomNavigationBar: Align(
-          alignment: FractionalOffset.bottomCenter,
-          child: SizedBox(
-            height: 100,
-            child: CurvedNavigationBar(
-              key: _bottomNavigationKey,
-              height: 60.0,
-              index: currentIndex,
-              items: <Widget>[
-                Icon(
-                  Icons.home,
-                  size: 30,
-                  color: xbicon,
-                ),
-                Icon(
-                  Icons.search,
-                  size: 30,
-                  color: xbicon,
-                ),
-                Icon(
-                  Icons.menu,
-                  size: 30,
-                  color: xbicon,
-                ),
-              ],
-              color: xbnavbar,
-              buttonBackgroundColor: xbnavbar,
-              backgroundColor: Colors.transparent,
-              animationCurve: Curves.easeInOut,
-              animationDuration: const Duration(milliseconds: 600),
-              onTap: (index) {
-                currentIndex = index;
-                _pageController.animateToPage(
-                  index,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.linear,
-                );
-                setState(() {});
-              },
-              letIndexChange: (index) => true,
+        bottomNavigationBar: CurvedNavigationBar(
+          key: _bottomNavigationKey,
+          height: 60.0,
+          index: currentIndex,
+          items: <Widget>[
+            Icon(
+              Icons.home,
+              size: 30,
+              color: xbicon,
             ),
-          ),
+            Icon(
+              Icons.search,
+              size: 30,
+              color: xbicon,
+            ),
+            Icon(
+              Icons.menu,
+              size: 30,
+              color: xbicon,
+            ),
+          ],
+          color: xbnavbar,
+          buttonBackgroundColor: xbnavbar,
+          backgroundColor: Colors.transparent,
+          animationCurve: Curves.easeInOut,
+          animationDuration: const Duration(milliseconds: 600),
+          onTap: (index) {
+            currentIndex = index;
+            _pageController.animateToPage(
+              index,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.linear,
+            );
+            setState(() {});
+          },
+          letIndexChange: (index) => true,
         ),
       );
   }

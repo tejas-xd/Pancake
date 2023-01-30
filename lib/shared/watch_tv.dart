@@ -26,13 +26,13 @@ class WebViewExampleTVState extends State<WebViewExampleTV> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WebView(
-            initialUrl: 'https://2embed.org/embed/series?tmdb=${widget.id}',
-            javascriptMode: JavascriptMode.unrestricted,
-            navigationDelegate: (navigation) => NavigationDecision.prevent,
-          ),);
+    return Scaffold(
+      body: WebView(
+              initialUrl: 'https://2embed.org/embed/series?tmdb=${widget.id}',
+              javascriptMode: JavascriptMode.unrestricted,
+              navigationDelegate: (navigation) => NavigationDecision.prevent,
+            ),
+    );
         }
 
 

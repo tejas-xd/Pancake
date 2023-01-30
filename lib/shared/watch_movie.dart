@@ -24,14 +24,14 @@ class WebViewExampleState extends State<WebViewExample> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: WebView(
-        initialUrl: 'https://2embed.org/embed/movie?tmdb=${widget.id.toString()}',
-        javascriptMode: JavascriptMode.unrestricted,
-        navigationDelegate: (navigation) => NavigationDecision.prevent,
+    return 
+       Scaffold(
+         body: WebView(
+          initialUrl: 'https://2embed.org/embed/movie?tmdb=${widget.id.toString()}',
+          javascriptMode: JavascriptMode.unrestricted,
+          navigationDelegate: (navigation) => NavigationDecision.prevent,
       ),
-    );
+       );
   }
   @override
   void dispose() {

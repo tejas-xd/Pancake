@@ -5,6 +5,7 @@ import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/shared/customvalues.dart';
 import 'package:pancake/shared/customwidgets.dart';
 import '../data_handling/models/user.dart';
+import '../homescreen.dart';
 
 class TVDescription extends StatefulWidget {
   final int id;
@@ -19,10 +20,7 @@ class TVDescription extends StatefulWidget {
 class _TVDescriptionState extends State<TVDescription> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(canvasColor: xcanvas),
-        home: Scaffold(
+    return Scaffold(
           body: FutureBuilder(
             future: ApiService().getTVDetail(widget.id.toString()),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -447,6 +445,14 @@ class _TVDescriptionState extends State<TVDescription> {
               }
             },
           ),
-        ));
+        );
+
+  }
+
+  @override
+  void dispose() {
+    Navigator.push(context,MaterialPageRoute(
+        builder: (context) => const Homescreen()));
+    super.dispose();
   }
 }
