@@ -8,14 +8,15 @@ import 'package:pancake/shared/tvshow_detailscreen.dart';
 import 'package:pancake/shared/watch_tv.dart';
 import 'customgridview.dart';
 
-
 double dot = 0;
+
 class HorizontalSlider extends StatefulWidget {
   const HorizontalSlider({Key? key}) : super(key: key);
 
   @override
   State<HorizontalSlider> createState() => _HorizontalSliderState();
 }
+
 class _HorizontalSliderState extends State<HorizontalSlider> {
   @override
   Widget build(BuildContext context) {
@@ -26,43 +27,42 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
           if (snapshot.hasData) {
             return CarouselSlider.builder(
               itemCount: 10,
-              itemBuilder: (BuildContext context, int itemIndex,
-                  int pageViewIndex) =>
-                  GestureDetector(
-                    onTap: () {
-                      if (snapshot.data[itemIndex].mediaType == 'movie') {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MovieDescription(
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) =>
+                      GestureDetector(
+                onTap: () {
+                  if (snapshot.data[itemIndex].mediaType == 'movie') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MovieDescription(
                                 id: snapshot.data[itemIndex].id,
                               )),
-                        );
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => TVDescription(
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TVDescription(
                                 id: snapshot.data[itemIndex].id,
                               )),
-                        );
-                      }
-                    },
-                    child: SizedBox(
-                      width: size.width,
-                      height: size.width/6,
-                      child: ClipRRect(
-                        borderRadius:
-                        const BorderRadius.all(Radius.circular(20.0)),
-                        child: Image(
-                          fit: BoxFit.cover,
-                          image: CachedNetworkImageProvider(
-                            'https://image.tmdb.org/t/p/original/${snapshot.data[itemIndex].backdropPath}',
-                          ),
-                        ),
+                    );
+                  }
+                },
+                child: SizedBox(
+                  width: size.width,
+                  height: size.width / 6,
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                    child: Image(
+                      fit: BoxFit.cover,
+                      image: CachedNetworkImageProvider(
+                        'https://image.tmdb.org/t/p/original/${snapshot.data[itemIndex].backdropPath}',
                       ),
                     ),
                   ),
+                ),
+              ),
               options: CarouselOptions(
                 aspectRatio: 10 / 6,
                 autoPlay: true,
@@ -72,12 +72,12 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
           } else {
             return CarouselSlider.builder(
               itemCount: 10,
-              itemBuilder: (BuildContext context, int itemIndex,
-                  int pageViewIndex) =>
-                  Container(
-                    width: 270,
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                  ),
+              itemBuilder:
+                  (BuildContext context, int itemIndex, int pageViewIndex) =>
+                      Container(
+                width: 270,
+                margin: const EdgeInsets.symmetric(vertical: 10),
+              ),
               options: CarouselOptions(
                 aspectRatio: 9 / 9,
                 autoPlay: true,
@@ -171,8 +171,9 @@ class Movielist extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5.0)),
-                        child: Image.network(
-                          'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
+                        child: Image(
+                          image: CachedNetworkImageProvider(
+                              'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -245,8 +246,9 @@ class TVlist extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(5.0)),
-                        child: Image.network(
-                          'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
+                        child: Image(
+                          image: CachedNetworkImageProvider(
+                              'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}'),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -297,7 +299,10 @@ class Mixedlist extends StatelessWidget {
         if (snapshot.hasData) {
           return Column(
             children: [
-              const CustomBar(str1: 'Favorite', str2: 'List',),
+              const CustomBar(
+                str1: 'Favorite',
+                str2: 'List',
+              ),
               SizedBox(
                 height: 190,
                 child: ListView.builder(
@@ -310,20 +315,27 @@ class Mixedlist extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => (snapshot.data.favorite[index].type == 'tv')?TVDescription(
-                                  id: snapshot.data.favorite[index].id,
-                                ):MovieDescription(id: snapshot.data.favorite[index].id,)),
+                                builder: (context) => (snapshot
+                                            .data.favorite[index].type ==
+                                        'tv')
+                                    ? TVDescription(
+                                        id: snapshot.data.favorite[index].id,
+                                      )
+                                    : MovieDescription(
+                                        id: snapshot.data.favorite[index].id,
+                                      )),
                           );
                         },
                         child: Container(
                           width: 115,
-                          margin:
-                          const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                          margin: const EdgeInsets.only(
+                              left: 10, right: 5, bottom: 10),
                           child: ClipRRect(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(5.0)),
-                            child: Image.network(
-                              'https://image.tmdb.org/t/p/w500/${snapshot.data.favorite[index].image}',
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            child: Image(
+                              image: CachedNetworkImageProvider(
+                                  'https://image.tmdb.org/t/p/w500/${snapshot.data.favorite[index].image}'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -347,20 +359,27 @@ class Mixedlist extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => (snapshot.data.watchlist[index].type == 'tv')?TVDescription(
-                                  id: snapshot.data.watchlist[index].id,
-                                ):MovieDescription(id: snapshot.data.watchlist[index].id,)),
+                                builder: (context) => (snapshot
+                                            .data.watchlist[index].type ==
+                                        'tv')
+                                    ? TVDescription(
+                                        id: snapshot.data.watchlist[index].id,
+                                      )
+                                    : MovieDescription(
+                                        id: snapshot.data.watchlist[index].id,
+                                      )),
                           );
                         },
                         child: Container(
                           width: 115,
-                          margin:
-                          const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                          margin: const EdgeInsets.only(
+                              left: 10, right: 5, bottom: 10),
                           child: ClipRRect(
                             borderRadius:
-                            const BorderRadius.all(Radius.circular(5.0)),
-                            child: Image.network(
-                              'https://image.tmdb.org/t/p/w500/${snapshot.data.watchlist[index].image}',
+                                const BorderRadius.all(Radius.circular(5.0)),
+                            child: Image(
+                              image: CachedNetworkImageProvider(
+                                  'https://image.tmdb.org/t/p/w500/${snapshot.data.watchlist[index].image}'),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -373,21 +392,25 @@ class Mixedlist extends StatelessWidget {
         } else {
           return Column(
             children: [
-              const CustomBar(str1: 'Favorite', str2: 'List',),
+              const CustomBar(
+                str1: 'Favorite',
+                str2: 'List',
+              ),
               SizedBox(
                 height: 190,
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: 3,
-                    separatorBuilder: (context, index) => const SizedBox(width: 2),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 2),
                     itemBuilder: (context, index) {
                       return Container(
                         width: 115,
-                        margin:
-                        const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                        margin: const EdgeInsets.only(
+                            left: 10, right: 5, bottom: 10),
                         child: ClipRRect(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
+                              const BorderRadius.all(Radius.circular(5.0)),
                           child: Image.asset('assets/defaultimage.png',
                               fit: BoxFit.cover),
                         ),
@@ -403,22 +426,22 @@ class Mixedlist extends StatelessWidget {
                 child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: 3,
-                    separatorBuilder: (context, index) => const SizedBox(width: 2),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(width: 2),
                     itemBuilder: (context, index) {
                       return Container(
                         width: 115,
-                        margin:
-                        const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                        margin: const EdgeInsets.only(
+                            left: 10, right: 5, bottom: 10),
                         child: ClipRRect(
                           borderRadius:
-                          const BorderRadius.all(Radius.circular(5.0)),
+                              const BorderRadius.all(Radius.circular(5.0)),
                           child: Image.asset('assets/defaultimage.png',
                               fit: BoxFit.cover),
                         ),
                       );
                     }),
               ),
-
             ],
           );
         }
@@ -476,7 +499,7 @@ class Genrelist extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: Colors.transparent,
                           borderRadius: BorderRadius.circular(10.0),
-                          border: Border.all(color: Colors.blueGrey)),
+                          border: Border.all(color: Colors.grey)),
                       child: Center(
                         child: Text(
                           snapshot.data[index].name,
@@ -498,7 +521,8 @@ class Genrelist extends StatelessWidget {
 }
 
 class Seasonlist extends StatelessWidget {
-  const Seasonlist({Key? key, required this.season, required this.id}) : super(key: key);
+  const Seasonlist({Key? key, required this.season, required this.id})
+      : super(key: key);
 
   final String id;
   final String season;
@@ -572,7 +596,6 @@ class Seasonlist extends StatelessWidget {
         });
   }
 }
-
 
 // class HorizontalSlider extends StatefulWidget {
 //   const HorizontalSlider({Key? key}) : super(key: key);
