@@ -9,8 +9,8 @@ String query = "";
 String mediatype = 'movie';
 
 Color xcanvas = const Color(0xff000000);
-Color xbnavbar = const Color(0xff343434);
-Color xbicon = Colors.tealAccent;
+Color xbnavbar = const Color(0xff242124);
+Color xbicon = Colors.teal;
 Color xtindicator = Colors.tealAccent;
 Color xtlabel = Colors.white;
 Color xtext = Colors.white;
