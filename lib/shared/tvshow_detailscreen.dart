@@ -11,14 +11,15 @@ import '../homescreen.dart';
 class TVDescription extends StatefulWidget {
   final int id;
 
-  TVDescription({Key? key, required this.id,}) : super(key: key);
-  String select = '';
-  late int i = -1;
+  const TVDescription({Key? key, required this.id,}) : super(key: key);
   @override
   State<TVDescription> createState() => _TVDescriptionState();
 }
 
 class _TVDescriptionState extends State<TVDescription> {
+
+  String select = '';
+  int i = -1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,18 +28,9 @@ class _TVDescriptionState extends State<TVDescription> {
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               var size = MediaQuery.of(context).size;
               if (snapshot.hasData) {
-                Future<Users?> readUser() async {
-                  final docuser = FirebaseFirestore.instance
-                      .collection('Users')
-                      .doc(FirebaseAuth.instance.currentUser!.uid);
-                  final snapshot = await docuser.get();
-                  if (snapshot.exists) {
-                    return Users.fromJson(snapshot.data()!);
-                  }
-                }
 
                 Future<bool> isfavorite() async {
-                  Users? test = await readUser();
+                  Users? test = await ApiService().readUser();
                   int a = 0;
                   for (int i = 0; i < test!.favorite!.length; i++) {
                     if (test.favorite![i].id == widget.id) {
@@ -50,9 +42,8 @@ class _TVDescriptionState extends State<TVDescription> {
                   }
                   return true;
                 }
-
                 Future<bool> iswatchlist() async {
-                  Users? test = await readUser();
+                  Users? test = await ApiService().readUser();
                   int a = 0;
                   for (int i = 0; i < test!.watchlist!.length; i++) {
                     if (test.watchlist![i].id == widget.id) {
@@ -64,16 +55,9 @@ class _TVDescriptionState extends State<TVDescription> {
                   }
                   return true;
                 }
+                int x = (i == -1) ? snapshot.data.seasons[0].seasonNumber : i;
+                (select == '') ? select = snapshot.data.seasons[0].name : {};
 
-                int x = (widget.i == -1)
-                    ? snapshot.data.seasons[0].seasonNumber
-                    : widget.i;
-                (widget.id == -1)
-                    ? widget.select = snapshot.data.seasons[0].seasonNumber
-                    : {};
-                (widget.select == '')
-                    ? widget.select = snapshot.data.seasons[0].name
-                    : {};
                 void showBookmarkDialogbox(BuildContext context) => showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -103,9 +87,9 @@ class _TVDescriptionState extends State<TVDescription> {
                                     child: TextButton(
                                       onPressed: () {
                                         setState(() {
-                                          widget.select =
+                                          select =
                                               snapshot.data.seasons[index].name;
-                                          widget.i = snapshot
+                                          i = snapshot
                                               .data.seasons[index].seasonNumber;
                                           Navigator.pop(context);
                                         });
@@ -124,6 +108,7 @@ class _TVDescriptionState extends State<TVDescription> {
                         ),
                       );
                     });
+
                 String title = (snapshot.data.firstAirDate == '')
                     ? '   N/A  '
                     : '   ${snapshot.data.firstAirDate.toString().substring(0, 4)}  ';
@@ -411,7 +396,7 @@ class _TVDescriptionState extends State<TVDescription> {
                             onPressed: () => showBookmarkDialogbox(context),
                             child: Row(
                               children: [
-                                Text(' ${widget.select} ',
+                                Text(' $select ',
                                     style: const TextStyle(
                                         color: Colors.blueGrey,
                                         fontSize: 16,
