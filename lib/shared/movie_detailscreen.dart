@@ -5,6 +5,7 @@ import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/shared/customvalues.dart';
 import 'package:pancake/shared/customwidgets.dart';
 import 'package:pancake/shared/watch_movie.dart';
+import 'package:readmore/readmore.dart';
 
 import '../data_handling/models/user.dart';
 import '../homescreen.dart';
@@ -328,12 +329,17 @@ class _MovieDescriptionState extends State<MovieDescription> {
                   Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: size.width * 0.05, vertical: 4),
-                    child: Text(
-                      snapshot.data.overview,
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: mode,
-                          fontWeight: FontWeight.w400),
+                    child: ReadMoreText(
+                        snapshot.data.overview,
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: mode,
+                            fontWeight: FontWeight.w400),
+                      trimLines: 4,
+                      colorClickableText: Colors.lightBlue,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: 'Read more',
+                      trimExpandedText: 'Show less',
                     ),
                   ),
                   InkWell(

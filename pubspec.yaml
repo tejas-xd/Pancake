@@ -47,6 +47,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   cached_network_image: ^3.2.3
   dots_indicator: ^2.1.0
+  readmore: ^2.2.0
 
 
 dev_dependencies:

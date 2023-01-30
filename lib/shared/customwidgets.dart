@@ -16,7 +16,6 @@ class HorizontalSlider extends StatefulWidget {
   @override
   State<HorizontalSlider> createState() => _HorizontalSliderState();
 }
-
 class _HorizontalSliderState extends State<HorizontalSlider> {
   @override
   Widget build(BuildContext context) {
@@ -51,7 +50,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                 },
                 child: SizedBox(
                   width: size.width,
-                  height: size.width / 6,
+                  height: size.width*0.6,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                     child: Image(
@@ -70,19 +69,9 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
               ),
             );
           } else {
-            return CarouselSlider.builder(
-              itemCount: 10,
-              itemBuilder:
-                  (BuildContext context, int itemIndex, int pageViewIndex) =>
-                      Container(
-                width: 270,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-              ),
-              options: CarouselOptions(
-                aspectRatio: 9 / 9,
-                autoPlay: true,
-                viewportFraction: 0.9,
-              ),
+            return SizedBox(
+              width: size.width,
+              height: size.width*0.6,
             );
           }
         });

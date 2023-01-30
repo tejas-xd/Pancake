@@ -27,6 +27,7 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
         extendBody: true,
         body: PageView(
