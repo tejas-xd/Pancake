@@ -85,7 +85,7 @@ class Hometab extends StatelessWidget {
           const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       scrollDirection: Axis.vertical,
       children: [
-        const HorizontalSliderX(),
+        const HorizontalSlider(),
         const CustomBar(
           str1: 'Trending',
           str2: 'Movies',

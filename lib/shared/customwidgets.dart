@@ -12,13 +12,13 @@ import 'customgridview.dart';
 double dot = 0;
 
 
-class HorizontalSliderX extends StatefulWidget {
-  const HorizontalSliderX({Key? key}) : super(key: key);
+class HorizontalSlider extends StatefulWidget {
+  const HorizontalSlider({Key? key}) : super(key: key);
 
   @override
-  State<HorizontalSliderX> createState() => _HorizontalSliderXState();
+  State<HorizontalSlider> createState() => _HorizontalSliderState();
 }
-class _HorizontalSliderXState extends State<HorizontalSliderX> {
+class _HorizontalSliderState extends State<HorizontalSlider> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -402,25 +402,55 @@ class Mixedlist extends StatelessWidget {
             ],
           );
         } else {
-          return SizedBox(
-            height: 190,
-            child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: 3,
-                separatorBuilder: (context, index) => const SizedBox(width: 2),
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: 115,
-                    margin:
-                    const EdgeInsets.only(left: 10, right: 5, bottom: 10),
-                    child: ClipRRect(
-                      borderRadius:
-                      const BorderRadius.all(Radius.circular(5.0)),
-                      child: Image.asset('assets/defaultimage.png',
-                          fit: BoxFit.cover),
-                    ),
-                  );
-                }),
+          return Column(
+            children: [
+              const CustomBar(str1: 'Favorite', str2: 'List',),
+              SizedBox(
+                height: 190,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    separatorBuilder: (context, index) => const SizedBox(width: 2),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: 115,
+                        margin:
+                        const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                        child: ClipRRect(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0)),
+                          child: Image.asset('assets/defaultimage.png',
+                              fit: BoxFit.cover),
+                        ),
+                      );
+                    }),
+              ),
+              const CustomBar(
+                str1: 'Watchlist',
+                str2: 'List',
+              ),
+              SizedBox(
+                height: 190,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    separatorBuilder: (context, index) => const SizedBox(width: 2),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        width: 115,
+                        margin:
+                        const EdgeInsets.only(left: 10, right: 5, bottom: 10),
+                        child: ClipRRect(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0)),
+                          child: Image.asset('assets/defaultimage.png',
+                              fit: BoxFit.cover),
+                        ),
+                      );
+                    }),
+              ),
+
+            ],
           );
         }
       },
