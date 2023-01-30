@@ -2,45 +2,62 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
-import 'package:pancake/data_handling/models/tvdetail.dart';
 import 'package:pancake/shared/customvalues.dart';
 import 'package:pancake/shared/customwidgets.dart';
-import 'package:pancake/shared/watch_tv.dart';
+import 'package:readmore/readmore.dart';
+import '../data_handling/models/user.dart';
+import '../homescreen.dart';
 
 class TVDescription extends StatefulWidget {
   final int id;
 
-  TVDescription({
-    Key? key,
-    required this.id,
-  }) : super(key: key);
-  String select = '';
-  late int i = -1;
+  const TVDescription({Key? key, required this.id,}) : super(key: key);
   @override
   State<TVDescription> createState() => _TVDescriptionState();
 }
 
 class _TVDescriptionState extends State<TVDescription> {
+
+  String select = '';
+  int i = -1;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(canvasColor: xcanvas),
-        home: Scaffold(
+    return Scaffold(
           body: FutureBuilder(
             future: ApiService().getTVDetail(widget.id.toString()),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               var size = MediaQuery.of(context).size;
               if (snapshot.hasData) {
-                int x = (widget.i == -1)
-                    ? snapshot.data.seasons[0].seasonNumber
-                    : widget.i;
-                (widget.id == -1)
-                    ? widget.select = snapshot.data.seasons[0].seasonNumber
-                    : {};
-                (widget.select == '')
-                    ? widget.select = snapshot.data.seasons[0].name
-                    : {};
+
+                Future<bool> isfavorite() async {
+                  Users? test = await ApiService().readUser();
+                  int a = 0;
+                  for (int i = 0; i < test!.favorite!.length; i++) {
+                    if (test.favorite![i].id == widget.id) {
+                      a = 1;
+                    }
+                  }
+                  if (a == 0) {
+                    return false;
+                  }
+                  return true;
+                }
+                Future<bool> iswatchlist() async {
+                  Users? test = await ApiService().readUser();
+                  int a = 0;
+                  for (int i = 0; i < test!.watchlist!.length; i++) {
+                    if (test.watchlist![i].id == widget.id) {
+                      a = 1;
+                    }
+                  }
+                  if (a == 0) {
+                    return false;
+                  }
+                  return true;
+                }
+                int x = (i == -1) ? snapshot.data.seasons[0].seasonNumber : i;
+                (select == '') ? select = snapshot.data.seasons[0].name : {};
+
                 void showBookmarkDialogbox(BuildContext context) => showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -70,15 +87,16 @@ class _TVDescriptionState extends State<TVDescription> {
                                     child: TextButton(
                                       onPressed: () {
                                         setState(() {
-                                          widget.select =
+                                          select =
                                               snapshot.data.seasons[index].name;
-                                          widget.i = snapshot
+                                          i = snapshot
                                               .data.seasons[index].seasonNumber;
                                           Navigator.pop(context);
                                         });
                                       },
                                       child: Text(
                                           snapshot.data.seasons[index].name,
+                                          overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                               color: Colors.tealAccent,
                                               fontSize: 20,
@@ -91,6 +109,7 @@ class _TVDescriptionState extends State<TVDescription> {
                         ),
                       );
                     });
+
                 String title = (snapshot.data.firstAirDate == '')
                     ? '   N/A  '
                     : '   ${snapshot.data.firstAirDate.toString().substring(0, 4)}  ';
@@ -100,6 +119,7 @@ class _TVDescriptionState extends State<TVDescription> {
                     (snapshot.data.voteAverage.toString().length < 3)
                         ? snapshot.data.voteAverage.toString()
                         : snapshot.data.voteAverage.toString().substring(0, 3);
+                String image = snapshot.data.posterPath;
                 return ListView(padding: EdgeInsets.zero, children: [
                   Stack(children: [
                     ClipRRect(
@@ -111,7 +131,7 @@ class _TVDescriptionState extends State<TVDescription> {
                               width: double.infinity,
                               color: mode,
                             )
-                          : Container(
+                          : SizedBox(
                               height: size.height * 0.4,
                               width: double.infinity,
                               child: ClipRRect(
@@ -159,67 +179,154 @@ class _TVDescriptionState extends State<TVDescription> {
                                 )
                               ],
                             ),
-                            InkWell(
-                              onTap: (){
-                                FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                  'favorite' : FieldValue.arrayUnion([
-                                    {
-                                      'id': widget.id,
-                                      'type': 'tv',
-                                      'image': snapshot.data.posterPath
-                                    }
-                                  ]),
-                                });
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.favorite_border_outlined,
-                                    color: Colors.redAccent,
-                                    size: 25.0,
-                                  ),
-                                  Text(
-                                    ' favorite ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
+                            FutureBuilder(
+                              future: isfavorite(),
+                              builder:
+                                  (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (snapshot.data == true) {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'favorite': FieldValue.arrayRemove([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'tv',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        } else {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'favorite': FieldValue.arrayUnion([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'tv',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        }
+                                      });
+                                    },
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        (snapshot.data == true)
+                                            ? const Icon(
+                                          Icons.favorite,
+                                          color: Colors.redAccent,
+                                          size: 25.0,
+                                        )
+                                            : const Icon(
+                                          Icons.favorite_border_outlined,
+                                          color: Colors.redAccent,
+                                          size: 25.0,
+                                        ),
+                                        const Text(
+                                          ' favorite ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              },
                             ),
-                            InkWell(
-                              onTap: (){
-                                FirebaseFirestore.instance.collection("Users").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                  'watchlist' : FieldValue.arrayUnion([
-                                    {
-                                      'id': widget.id,
-                                      'type': 'tv',
-                                      'image': snapshot.data.posterPath
-                                    }
-                                  ]),
-                                });
-                              },
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Icon(
-                                    Icons.watch_later_outlined,
-                                    color: Colors.greenAccent,
-                                    size: 25.0,
-                                  ),
-                                  Text(
-                                    ' watchlist ',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
+                            FutureBuilder(
+                              future: iswatchlist(),
+                              builder:
+                                  (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.hasData) {
+                                  return InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        if (snapshot.data == true) {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'watchlist': FieldValue.arrayRemove([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'tv',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        } else {
+                                          FirebaseFirestore.instance
+                                              .collection("Users")
+                                              .doc(FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                              .update({
+                                            'watchlist': FieldValue.arrayUnion([
+                                              {
+                                                'id': widget.id,
+                                                'type': 'tv',
+                                                'image': image
+                                              }
+                                            ]),
+                                          });
+                                        }
+                                      });
+                                    },
+                                    child: (snapshot.data)?Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.watch_later_outlined,
+                                          color: Colors.greenAccent,
+                                          size: 25.0,
+                                        ),
+                                        Text(
+                                          ' remove ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        )
+                                      ],
+                                    ):Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(
+                                          Icons.add_circle_outline,
+                                          color: Colors.white,
+                                          size: 25.0,
+                                        ),
+                                        Text(
+                                          ' watchlist ',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              },
                             ),
                           ],
                         ),
@@ -261,12 +368,17 @@ class _TVDescriptionState extends State<TVDescription> {
                   Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: size.width * 0.05, vertical: 4),
-                    child: Text(
+                    child: ReadMoreText(
                       snapshot.data.overview,
                       style: TextStyle(
                           fontSize: 16,
                           color: mode,
                           fontWeight: FontWeight.w400),
+                      trimLines: 4,
+                      colorClickableText: Colors.lightBlue,
+                      trimMode: TrimMode.Line,
+                      trimCollapsedText: 'Read more',
+                      trimExpandedText: 'Show less',
                     ),
                   ),
                   Row(
@@ -285,12 +397,17 @@ class _TVDescriptionState extends State<TVDescription> {
                             onPressed: () => showBookmarkDialogbox(context),
                             child: Row(
                               children: [
-                                Text(' ${widget.select} ',
-                                    style: const TextStyle(
-                                        color: Colors.blueGrey,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 2)),
+                                Container(
+                                  width: size.width*0.4,
+                                  child: Text(' $select ',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 2)),
+                                ),
                                 const Icon(Icons.expand_circle_down_outlined,
                                     size: 18, color: Colors.blueGrey)
                               ],
@@ -298,7 +415,7 @@ class _TVDescriptionState extends State<TVDescription> {
                           )),
                     ],
                   ),
-                  Container(
+                  SizedBox(
                     width: size.width,
                     height: 150,
                     child: Seasonlist(
@@ -325,6 +442,14 @@ class _TVDescriptionState extends State<TVDescription> {
               }
             },
           ),
-        ));
+        );
+
+  }
+
+  @override
+  void dispose() {
+    Navigator.push(context,MaterialPageRoute(
+        builder: (context) => const Homescreen()));
+    super.dispose();
   }
 }

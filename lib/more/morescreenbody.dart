@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handling/apiservices.dart';
 import 'package:pancake/shared/customwidgets.dart';
 import 'package:provider/provider.dart';
-
 import '../googlesignin.dart';
 
 class Morescreenbody extends StatefulWidget {
@@ -15,9 +13,10 @@ class Morescreenbody extends StatefulWidget {
 }
 
 class _MorescreenbodyState extends State<Morescreenbody> {
-  @override
-  Stream<QuerySnapshot> stream = FirebaseFirestore.instance.collection('Users').snapshots();
+
   final user = FirebaseAuth.instance.currentUser!;
+
+  @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Column(
@@ -47,24 +46,6 @@ class _MorescreenbodyState extends State<Morescreenbody> {
         ),
         const SizedBox(
           height: 20,
-        ),
-        StreamBuilder<QuerySnapshot>(
-          stream: stream,
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text('Loading...');
-            }
-            if (snapshot.hasData) {
-              snapshot.data!.docs.forEach((element) {
-                print(element.data());
-              });
-              return Text('Data Loaded');
-            }
-            return Container();
-          },
         ),
         Container(
           height: size.height * 0.1,
@@ -96,16 +77,8 @@ class _MorescreenbodyState extends State<Morescreenbody> {
         const SizedBox(
           height: 20,
         ),
-        const CustomBar(str1: 'Favorite', str2: 'List',),
-        Movielist(
-          futre: ApiService().getTrendingMovie(),
-        ),
-        const CustomBar(
-          str1: 'Watchlist',
-          str2: 'List',
-        ),
-        TVlist(
-          futre: ApiService().getTrendingTVshow(),
+        Mixedlist(
+          futre: ApiService().readUser(),
         ),
         const SizedBox(
           height: 20,

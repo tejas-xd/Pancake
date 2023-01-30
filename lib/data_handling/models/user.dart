@@ -1,38 +1,38 @@
 
-class User {
+class Users {
   String? email;
   String? name;
   List<Favorite>? favorite;
   List<Favorite>? watchlist;
 
-  User({this.email, this.name, this.favorite, this.watchlist});
+  Users({this.email, this.name, this.favorite, this.watchlist});
 
-  User.fromJson(Map<String, dynamic> json) {
+  Users.fromJson(Map<String, dynamic> json) {
     email = json['Email'];
     name = json['name'];
     if (json['favorite'] != null) {
       favorite = <Favorite>[];
       json['favorite'].forEach((v) {
-        favorite!.add(new Favorite.fromJson(v));
+        favorite!.add(Favorite.fromJson(v));
       });
     }
     if (json['watchlist'] != null) {
       watchlist = <Favorite>[];
       json['watchlist'].forEach((v) {
-        watchlist!.add(new Favorite.fromJson(v));
+        watchlist!.add(Favorite.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Email'] = this.email;
-    data['name'] = this.name;
-    if (this.favorite != null) {
-      data['favorite'] = this.favorite!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['Email'] = email;
+    data['name'] = name;
+    if (favorite != null) {
+      data['favorite'] = favorite!.map((v) => v.toJson()).toList();
     }
-    if (this.watchlist != null) {
-      data['watchlist'] = this.watchlist!.map((v) => v.toJson()).toList();
+    if (watchlist != null) {
+      data['watchlist'] = watchlist!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -52,10 +52,10 @@ class Favorite {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['image'] = this.image;
-    data['id'] = this.id;
-    data['type'] = this.type;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['image'] = image;
+    data['id'] = id;
+    data['type'] = type;
     return data;
   }
 }
