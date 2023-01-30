@@ -96,6 +96,7 @@ class _TVDescriptionState extends State<TVDescription> {
                                       },
                                       child: Text(
                                           snapshot.data.seasons[index].name,
+                                          overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
                                               color: Colors.tealAccent,
                                               fontSize: 20,
@@ -396,12 +397,17 @@ class _TVDescriptionState extends State<TVDescription> {
                             onPressed: () => showBookmarkDialogbox(context),
                             child: Row(
                               children: [
-                                Text(' $select ',
-                                    style: const TextStyle(
-                                        color: Colors.blueGrey,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 2)),
+                                Container(
+                                  width: size.width*0.4,
+                                  child: Text(' $select ',
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.right,
+                                      style: const TextStyle(
+                                          color: Colors.blueGrey,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 2)),
+                                ),
                                 const Icon(Icons.expand_circle_down_outlined,
                                     size: 18, color: Colors.blueGrey)
                               ],
