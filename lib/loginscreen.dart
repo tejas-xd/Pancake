@@ -15,8 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Container(
         width: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(image: AssetImage('assets/login-image.jpg'),fit: BoxFit.cover) ,     ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -43,7 +41,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ],
             ),
             SizedBox(
+              width: size.width,
               height: size.height*0.5,
+              child: const Image(
+                  image: AssetImage('assets/login-image.jpg'),
+              fit: BoxFit.cover,),
+            ),
+            SizedBox(
+              height: size.height*0.1,
             ),
             TextButton(
               onPressed: () {
@@ -53,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Container(
                 height: 50,
-                width: 160,
+                width: size.width*0.6,
                 decoration: BoxDecoration(
                   color: Colors.blueGrey,
                   borderRadius: BorderRadius.circular(10.0),
