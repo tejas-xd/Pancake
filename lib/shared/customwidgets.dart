@@ -10,8 +10,6 @@ import 'customgridview.dart';
 
 
 double dot = 0;
-
-
 class HorizontalSlider extends StatefulWidget {
   const HorizontalSlider({Key? key}) : super(key: key);
 
@@ -21,102 +19,73 @@ class HorizontalSlider extends StatefulWidget {
 class _HorizontalSliderState extends State<HorizontalSlider> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FutureBuilder(
-            future: ApiService().getTrendingAll(),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return CarouselSlider.builder(
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) =>
-                      InkWell(
+    return FutureBuilder(
+        future: ApiService().getTrendingAll(),
+        builder: (context, AsyncSnapshot snapshot) {
+          var size = MediaQuery.of(context).size;
+          if (snapshot.hasData) {
+            return CarouselSlider.builder(
+              itemCount: 10,
+              itemBuilder: (BuildContext context, int itemIndex,
+                  int pageViewIndex) =>
+                  GestureDetector(
                     onTap: () {
                       if (snapshot.data[itemIndex].mediaType == 'movie') {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => MovieDescription(
-                                    id: snapshot.data[itemIndex].id,
-                                  )),
+                                id: snapshot.data[itemIndex].id,
+                              )),
                         );
                       } else {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => TVDescription(
-                                    id: snapshot.data[itemIndex].id,
-                                  )),
+                                id: snapshot.data[itemIndex].id,
+                              )),
                         );
                       }
                     },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 5),
+                    child: SizedBox(
+                      width: size.width,
+                      height: size.width/6,
                       child: ClipRRect(
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(20.0)),
-                        child: Stack(
-                          children: <Widget>[
-                            Image(
-                              fit: BoxFit.fill,
-                              image: CachedNetworkImageProvider(
-                                'https://image.tmdb.org/t/p/original/${snapshot.data[itemIndex].posterPath}',
-                              ),
-                            )
-                          ],
+                        const BorderRadius.all(Radius.circular(20.0)),
+                        child: Image(
+                          fit: BoxFit.cover,
+                          image: CachedNetworkImageProvider(
+                            'https://image.tmdb.org/t/p/original/${snapshot.data[itemIndex].backdropPath}',
+                          ),
                         ),
                       ),
                     ),
                   ),
-                  options: CarouselOptions(
-                    aspectRatio: 9 / 9,
-                    autoPlay: true,
-                    viewportFraction: 0.8,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        dot = index.toDouble();
-                      });
-                    },
-                  ),
-                );
-              } else {
-                return CarouselSlider.builder(
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) =>
-                      Container(
+              options: CarouselOptions(
+                aspectRatio: 10 / 6,
+                autoPlay: true,
+                viewportFraction: 1,
+              ),
+            );
+          } else {
+            return CarouselSlider.builder(
+              itemCount: 10,
+              itemBuilder: (BuildContext context, int itemIndex,
+                  int pageViewIndex) =>
+                  Container(
                     width: 270,
                     margin: const EdgeInsets.symmetric(vertical: 10),
                   ),
-                  options: CarouselOptions(
-                    aspectRatio: 9 / 9,
-                    autoPlay: true,
-                    viewportFraction: 0.9,
-                  ),
-                );
-              }
-            }),
-        Container(
-          margin: const EdgeInsets.only(
-            top: 10,
-          ),
-          alignment: Alignment.bottomCenter,
-          child: DotsIndicator(
-            dotsCount: 10,
-            position: dot,
-            decorator: DotsDecorator(
-              activeColor: Colors.blueGrey,
-              color: Colors.grey,
-              size: const Size.square(9.0),
-              activeSize: const Size(18.0, 9.0),
-              activeShape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0)),
-            ),
-          ),
-        ),
-      ],
-    );
+              options: CarouselOptions(
+                aspectRatio: 9 / 9,
+                autoPlay: true,
+                viewportFraction: 0.9,
+              ),
+            );
+          }
+        });
   }
 }
 
@@ -604,6 +573,114 @@ class Seasonlist extends StatelessWidget {
   }
 }
 
+
+// class HorizontalSlider extends StatefulWidget {
+//   const HorizontalSlider({Key? key}) : super(key: key);
+//
+//   @override
+//   State<HorizontalSlider> createState() => _HorizontalSliderState();
+// }
+// class _HorizontalSliderState extends State<HorizontalSlider> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: [
+//         FutureBuilder(
+//             future: ApiService().getTrendingAll(),
+//             builder: (context, AsyncSnapshot snapshot) {
+//               if (snapshot.hasData) {
+//                 return CarouselSlider.builder(
+//                   itemCount: 10,
+//                   itemBuilder: (BuildContext context, int itemIndex,
+//                       int pageViewIndex) =>
+//                       InkWell(
+//                         onTap: () {
+//                           if (snapshot.data[itemIndex].mediaType == 'movie') {
+//                             Navigator.push(
+//                               context,
+//                               MaterialPageRoute(
+//                                   builder: (context) => MovieDescription(
+//                                     id: snapshot.data[itemIndex].id,
+//                                   )),
+//                             );
+//                           } else {
+//                             Navigator.push(
+//                               context,
+//                               MaterialPageRoute(
+//                                   builder: (context) => TVDescription(
+//                                     id: snapshot.data[itemIndex].id,
+//                                   )),
+//                             );
+//                           }
+//                         },
+//                         child: Container(
+//                           margin: const EdgeInsets.symmetric(horizontal: 5),
+//                           child: ClipRRect(
+//                             borderRadius:
+//                             const BorderRadius.all(Radius.circular(20.0)),
+//                             child: Stack(
+//                               children: <Widget>[
+//                                 Image(
+//                                   fit: BoxFit.fill,
+//                                   image: CachedNetworkImageProvider(
+//                                     'https://image.tmdb.org/t/p/original/${snapshot.data[itemIndex].posterPath}',
+//                                   ),
+//                                 )
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                   options: CarouselOptions(
+//                     aspectRatio: 9 / 9,
+//                     autoPlay: true,
+//                     viewportFraction: 0.8,
+//                     onPageChanged: (index, reason) {
+//                       setState(() {
+//                         dot = index.toDouble();
+//                       });
+//                     },
+//                   ),
+//                 );
+//               } else {
+//                 return CarouselSlider.builder(
+//                   itemCount: 10,
+//                   itemBuilder: (BuildContext context, int itemIndex,
+//                       int pageViewIndex) =>
+//                       Container(
+//                         width: 270,
+//                         margin: const EdgeInsets.symmetric(vertical: 10),
+//                       ),
+//                   options: CarouselOptions(
+//                     aspectRatio: 9 / 9,
+//                     autoPlay: true,
+//                     viewportFraction: 0.9,
+//                   ),
+//                 );
+//               }
+//             }),
+//         Container(
+//           margin: const EdgeInsets.only(
+//             top: 10,
+//           ),
+//           alignment: Alignment.bottomCenter,
+//           child: DotsIndicator(
+//             dotsCount: 10,
+//             position: dot,
+//             decorator: DotsDecorator(
+//               activeColor: Colors.blueGrey,
+//               color: Colors.grey,
+//               size: const Size.square(9.0),
+//               activeSize: const Size(18.0, 9.0),
+//               activeShape: RoundedRectangleBorder(
+//                   borderRadius: BorderRadius.circular(5.0)),
+//             ),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 // Widget Card(String title, ImageProvider image) {
 //   return Column(
 //     mainAxisAlignment: MainAxisAlignment.center,

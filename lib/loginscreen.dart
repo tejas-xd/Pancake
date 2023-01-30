@@ -18,11 +18,13 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: const BoxDecoration(
           image: DecorationImage(image: AssetImage('assets/login-image.jpg'),fit: BoxFit.cover) ,     ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Column(
               children: [
+                SizedBox(
+                  height: size.height*0.06,
+                ),
                 Container(
                   height: size.height * 0.06,
                   margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -40,8 +42,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 )
               ],
             ),
-            const SizedBox(
-              height: 150,
+            SizedBox(
+              height: size.height*0.5,
             ),
             TextButton(
               onPressed: () {
