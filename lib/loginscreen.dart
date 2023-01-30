@@ -11,21 +11,37 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Center(
+      body: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          image: DecorationImage(image: AssetImage('assets/login-image.jpg'),fit: BoxFit.cover) ,     ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              width: 300,
-              height: 300,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(150.0)),
-                child: Image.asset('assets/login-banner.gif', fit: BoxFit.cover),
-              ),
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                Container(
+                  height: size.height * 0.06,
+                  margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                  child: Image.asset('assets/appbar.png'),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  child: const Text('All your favorite films in one click',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 5),
+                  textAlign: TextAlign.center,),
+                )
+              ],
             ),
             const SizedBox(
-              height: 30,
+              height: 150,
             ),
             TextButton(
               onPressed: () {
@@ -46,15 +62,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Google sign-in',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.tealAccent,
+                      color: Colors.white,
                     ),
                   ),
                 ),
               ),
-            )
+            ),
+            const SizedBox(),
           ],
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      )
     );
   }
 }
