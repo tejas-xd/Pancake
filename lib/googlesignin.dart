@@ -42,9 +42,7 @@ class GoogleSignInProvider extends ChangeNotifier {
         }
       }
 
-
       startcollection();
-
     });
     notifyListeners();
   }

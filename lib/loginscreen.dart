@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 Container(
                   height: size.height * 0.06,
-                  margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                  margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                   child: Image.asset('assets/appbar.png'),
                 ),
                 Container(

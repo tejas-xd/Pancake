@@ -288,18 +288,6 @@ class ApiService {
     }
   }
 
-  Future<TVimbd> getTVimbdid(String id, season, episode) async {
-    try {
-      final url = '$baseUrl/tv/$id/season/$season/episode/$episode?$apiKey';
-      final response = await _dio.get(url);
-      TVimbd tv = TVimbd.fromJson(response.data);
-      return tv;
-    } catch (error, stacktrace) {
-      throw Exception(
-          'Exception accoured: $error with stacktrace: $stacktrace');
-    }
-  }
-
   Future<Users?> readUser() async {
     final docuser = FirebaseFirestore.instance.collection('Users').doc(FirebaseAuth.instance.currentUser!.uid);
     final snapshot = await docuser.get();

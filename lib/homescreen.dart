@@ -30,6 +30,7 @@ class _HomescreenState extends State<Homescreen> {
         resizeToAvoidBottomInset: true,
         extendBody: true,
         body: PageView(
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           controller: _pageController,
           onPageChanged: (page) {
             setState(() {
