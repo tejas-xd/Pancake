@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:pancake/shared/customvalues.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 
@@ -27,6 +28,7 @@ class WebViewExampleTVState extends State<WebViewExampleTV> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: mode,
       body: WebView(
         initialUrl: 'https://2embed.org/embed/series?tmdb=${widget.id}',
         javascriptMode: JavascriptMode.unrestricted,

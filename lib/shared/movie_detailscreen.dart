@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pancake/data_handeling/apiservices.dart';
 import 'package:pancake/shared/customvalues.dart';
@@ -101,155 +99,27 @@ class _MovieDescriptionState extends State<MovieDescription> {
                           )
                         ],
                       ),
-                      // FutureBuilder(
-                      //   future: isfavorite(),
-                      //   builder:
-                      //       (BuildContext context, AsyncSnapshot snapshot) {
-                      //     if (snapshot.hasData) {
-                      //       return InkWell(
-                      //         onTap: () {
-                      //           setState(() {
-                      //             if (snapshot.data == true) {
-                      //               FirebaseFirestore.instance
-                      //                   .collection("Users")
-                      //                   .doc(FirebaseAuth
-                      //                   .instance.currentUser!.uid)
-                      //                   .update({
-                      //                 'favorite': FieldValue.arrayRemove([
-                      //                   {
-                      //                     'id': widget.id,
-                      //                     'type': 'movie',
-                      //                     'image': image
-                      //                   }
-                      //                 ]),
-                      //               });
-                      //             } else {
-                      //               FirebaseFirestore.instance
-                      //                   .collection("Users")
-                      //                   .doc(FirebaseAuth
-                      //                   .instance.currentUser!.uid)
-                      //                   .update({
-                      //                 'favorite': FieldValue.arrayUnion([
-                      //                   {
-                      //                     'id': widget.id,
-                      //                     'type': 'movie',
-                      //                     'image': image
-                      //                   }
-                      //                 ]),
-                      //               });
-                      //             }
-                      //           });
-                      //         },
-                      //         child: Column(
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: [
-                      //             (snapshot.data == true)
-                      //                 ? const Icon(
-                      //               Icons.favorite,
-                      //               color: Colors.redAccent,
-                      //               size: 25.0,
-                      //             )
-                      //                 : const Icon(
-                      //               Icons.favorite_border_outlined,
-                      //               color: Colors.redAccent,
-                      //               size: 25.0,
-                      //             ),
-                      //             const Text(
-                      //               ' favorite ',
-                      //               style: TextStyle(
-                      //                 color: Colors.white,
-                      //                 fontSize: 14,
-                      //                 fontWeight: FontWeight.w300,
-                      //               ),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       );
-                      //     } else {
-                      //       return Container();
-                      //     }
-                      //   },
-                      // ),
-                      // FutureBuilder(
-                      //   future: iswatchlist(),
-                      //   builder:
-                      //       (BuildContext context, AsyncSnapshot snapshot) {
-                      //     if (snapshot.hasData) {
-                      //       return InkWell(
-                      //         onTap: () {
-                      //           setState(() {
-                      //             if (snapshot.data == true) {
-                      //               FirebaseFirestore.instance
-                      //                   .collection("Users")
-                      //                   .doc(FirebaseAuth
-                      //                   .instance.currentUser!.uid)
-                      //                   .update({
-                      //                 'watchlist': FieldValue.arrayRemove([
-                      //                   {
-                      //                     'id': widget.id,
-                      //                     'type': 'movie',
-                      //                     'image': image
-                      //                   }
-                      //                 ]),
-                      //               });
-                      //             } else {
-                      //               FirebaseFirestore.instance
-                      //                   .collection("Users")
-                      //                   .doc(FirebaseAuth
-                      //                   .instance.currentUser!.uid)
-                      //                   .update({
-                      //                 'watchlist': FieldValue.arrayUnion([
-                      //                   {
-                      //                     'id': widget.id,
-                      //                     'type': 'movie',
-                      //                     'image': image
-                      //                   }
-                      //                 ]),
-                      //               });
-                      //             }
-                      //           });
-                      //         },
-                      //         child: (snapshot.data)?Column(
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: const [
-                      //             Icon(
-                      //               Icons.watch_later_outlined,
-                      //               color: Colors.greenAccent,
-                      //               size: 25.0,
-                      //             ),
-                      //             Text(
-                      //               ' remove ',
-                      //               style: TextStyle(
-                      //                 color: Colors.white,
-                      //                 fontSize: 14,
-                      //                 fontWeight: FontWeight.w300,
-                      //               ),
-                      //             )
-                      //           ],
-                      //         ):Column(
-                      //           mainAxisAlignment: MainAxisAlignment.center,
-                      //           children: const [
-                      //             Icon(
-                      //               Icons.add_circle_outline,
-                      //               color: Colors.white,
-                      //               size: 25.0,
-                      //             ),
-                      //             Text(
-                      //               ' watchlist ',
-                      //               style: TextStyle(
-                      //                 color: Colors.white,
-                      //                 fontSize: 14,
-                      //                 fontWeight: FontWeight.w300,
-                      //               ),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       );
-                      //     } else {
-                      //       return Container();
-                      //     }
-                      //   },
-                      // ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            snapshot.data.status,
+                            style: const TextStyle(
+                              color: Colors.teal,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          const Text(
+                            ' Status ',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          )
+                        ],
+                      )
                     ],
                   ),
                 )

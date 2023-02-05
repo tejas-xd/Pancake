@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pancake/more/morescreenbody.dart';
 import 'package:pancake/search/searchscreenbody.dart';
 import 'package:pancake/shared/customvalues.dart';
@@ -41,45 +42,48 @@ class _HomescreenState extends State<Homescreen> {
         children: const <Widget>[
           Homescreenbody(),
           Searchscreenbody(),
-          Morescreenbody(),
         ],
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        key: _bottomNavigationKey,
-        height: 60.0,
-        index: currentIndex,
-        items: <Widget>[
-          Icon(
-            Icons.home,
-            size: 30,
-            color: xbicon,
-          ),
-          Icon(
-            Icons.search,
-            size: 30,
-            color: xbicon,
-          ),
-          Icon(
-            Icons.menu,
-            size: 30,
-            color: xbicon,
-          ),
-        ],
-        color: xbnavbar,
-        buttonBackgroundColor: xbnavbar,
-        backgroundColor: Colors.transparent,
-        animationCurve: Curves.easeInOut,
-        animationDuration: const Duration(milliseconds: 600),
-        onTap: (index) {
-          currentIndex = index;
-          _pageController.animateToPage(
-            index,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.linear,
-          );
-          setState(() {});
-        },
-        letIndexChange: (index) => true,
+      bottomNavigationBar: Align(
+        alignment: FractionalOffset.bottomCenter,
+        child:  Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width*0.8,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            margin: const EdgeInsets.fromLTRB(8, 8, 8, 16),
+            decoration: BoxDecoration(
+                color: xbnavbar,
+                borderRadius: BorderRadius.circular(12)),
+            child: GNav(
+              gap: 8,
+              color: Colors.tealAccent,
+              activeColor: Colors.tealAccent,
+              tabBackgroundColor: Colors.white.withOpacity(0.2),
+              iconSize: 24,
+              padding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              duration: const Duration(milliseconds: 400),
+              tabs: const [
+                GButton(
+                  icon: Icons.home,
+                  text: 'Home',
+                ),
+                GButton(
+                  icon: Icons.search,
+                  text: 'Search',
+                ),
+              ],
+              selectedIndex: currentIndex,
+              onTabChange: (value) {
+                currentIndex = value;
+                _pageController.animateToPage(
+                  value,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.linear,
+                );
+                setState(() {});
+              },
+            )),
       ),
     );
   }

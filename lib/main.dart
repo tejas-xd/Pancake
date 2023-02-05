@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pancake/homescreen.dart';
 import 'package:flutter/services.dart';
+import 'package:pancake/shared/customvalues.dart';
 
 
 void main()
@@ -17,6 +19,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  const Homescreen();
+    return  MaterialApp(
+      theme: ThemeData(
+          brightness: Brightness.dark,
+          canvasColor: xcanvas,
+          textTheme: TextTheme(
+            bodyText1: GoogleFonts.poppins(),
+            bodyText2: GoogleFonts.poppins(),
+          )
+      ),
+      debugShowCheckedModeBanner: false,
+      home: const Homescreen(),
+    );
   }
 }

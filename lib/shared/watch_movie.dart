@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:pancake/shared/customvalues.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewExample extends StatefulWidget {
@@ -26,6 +27,7 @@ class WebViewExampleState extends State<WebViewExample> {
   Widget build(BuildContext context) {
     return
       Scaffold(
+        backgroundColor: mode,
         body: WebView(
           initialUrl: 'https://2embed.org/embed/movie?tmdb=${widget.id.toString()}',
           javascriptMode: JavascriptMode.unrestricted,
