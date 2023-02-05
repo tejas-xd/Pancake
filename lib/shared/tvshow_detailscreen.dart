@@ -65,7 +65,7 @@ class _TVDescriptionState extends State<TVDescription> {
                         backgroundColor: Colors.transparent,
                         child: Container(
                           decoration: BoxDecoration(
-                              color: Colors.blueGrey,
+                              color: const Color(0xff242124),
                               borderRadius: BorderRadius.circular(20)),
                           height: size.height * 0.4,
                           width: size.width * 0.4,
