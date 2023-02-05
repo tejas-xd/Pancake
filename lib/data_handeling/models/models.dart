@@ -1,4 +1,3 @@
-
 class Mixed {
   bool? adult;
   String? backdropPath;
@@ -29,9 +28,7 @@ class Mixed {
     backdropPath = json['backdrop_path'];
     id = json['id'];
     title = json['title'];
-    if (title == null) {
-      title = json['name'];
-    }
+    title ??= json['name'];
     originalLanguage = json['original_language'];
     originalTitle = json['original_title'];
     if (title == null) {
@@ -44,25 +41,25 @@ class Mixed {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['adult'] = adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['id'] = this.id;
-    data['title'] = this.title;
+    data['backdrop_path'] = backdropPath;
+    data['id'] = id;
+    data['title'] = title;
     if (title == null) {
-      data['name'] = this.title;
+      data['name'] = title;
     }
 
-    data['original_language'] = this.originalLanguage;
-    data['original_title'] = this.originalTitle;
+    data['original_language'] = originalLanguage;
+    data['original_title'] = originalTitle;
     if (title == null) {
-      data['original_name'] = this.originalTitle;
+      data['original_name'] = originalTitle;
     }
 
-    data['overview'] = this.overview;
-    data['poster_path'] = this.posterPath;
-    data['media_type'] = this.mediaType;
-    data['vote_average'] = this.voteAverage;
+    data['overview'] = overview;
+    data['poster_path'] = posterPath;
+    data['media_type'] = mediaType;
+    data['vote_average'] = voteAverage;
     return data;
   }
 }
@@ -97,14 +94,14 @@ class Movie {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['original_language'] = this.originalLanguage;
-    data['original_title'] = this.originalTitle;
-    data['poster_path'] = this.posterPath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    data['id'] = id;
+    data['title'] = title;
+    data['original_language'] = originalLanguage;
+    data['original_title'] = originalTitle;
+    data['poster_path'] = posterPath;
     return data;
   }
 }
@@ -139,284 +136,33 @@ class TVshow {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['original_language'] = this.originalLanguage;
-    data['original_name'] = this.originalName;
-    data['poster_path'] = this.posterPath;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['adult'] = adult;
+    data['backdrop_path'] = backdropPath;
+    data['id'] = id;
+    data['name'] = name;
+    data['original_language'] = originalLanguage;
+    data['original_name'] = originalName;
+    data['poster_path'] = posterPath;
     return data;
   }
 }
 
-class Genres {
+class Genre {
   int? id;
   String? name;
 
-  Genres({this.id, this.name});
+  Genre({this.id, this.name});
 
-  Genres.fromJson(Map<String, dynamic> json) {
+  Genre.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    return data;
-  }
-}
-
-class Moviedetail {
-  bool? adult;
-  String? backdropPath;
-  int? budget;
-  List<Genres>? genres;
-  String? homepage;
-  int? id;
-  String? imdbId;
-  String? originalLanguage;
-  String? originalTitle;
-  String? overview;
-  double? popularity;
-  String? posterPath;
-  String? releaseDate;
-  int? revenue;
-  int? runtime;
-  String? status;
-  String? tagline;
-  String? title;
-  double? voteAverage;
-  int? voteCount;
-
-  Moviedetail(
-      {this.adult,
-      this.backdropPath,
-      this.budget,
-      this.genres,
-      this.homepage,
-      this.id,
-      this.imdbId,
-      this.originalLanguage,
-      this.originalTitle,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.releaseDate,
-      this.revenue,
-      this.runtime,
-      this.status,
-      this.tagline,
-      this.title,
-      this.voteAverage,
-      this.voteCount});
-
-  Moviedetail.fromJson(Map<String, dynamic> json) {
-    adult = json['adult'];
-    backdropPath = json['backdrop_path'];
-    budget = json['budget'];
-    if (json['genres'] != null) {
-      genres = <Genres>[];
-      json['genres'].forEach((v) {
-        genres!.add(new Genres.fromJson(v));
-      });
-    }
-    homepage = json['homepage'];
-    id = json['id'];
-    imdbId = json['imdb_id'];
-    originalLanguage = json['original_language'];
-    originalTitle = json['original_title'];
-    overview = json['overview'];
-    popularity = json['popularity'];
-    posterPath = json['poster_path'];
-    releaseDate = json['release_date'];
-    revenue = json['revenue'];
-    runtime = json['runtime'];
-    status = json['status'];
-    tagline = json['tagline'];
-    title = json['title'];
-    voteAverage = json['vote_average'];
-    voteCount = json['vote_count'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['budget'] = this.budget;
-    if (this.genres != null) {
-      data['genres'] = this.genres!.map((v) => v.toJson()).toList();
-    }
-    data['homepage'] = this.homepage;
-    data['id'] = this.id;
-    data['imdb_id'] = this.imdbId;
-    data['original_language'] = this.originalLanguage;
-    data['original_title'] = this.originalTitle;
-    data['overview'] = this.overview;
-    data['popularity'] = this.popularity;
-    data['poster_path'] = this.posterPath;
-    data['release_date'] = this.releaseDate;
-    data['revenue'] = this.revenue;
-    data['runtime'] = this.runtime;
-    data['status'] = this.status;
-    data['tagline'] = this.tagline;
-    data['title'] = this.title;
-    data['vote_average'] = this.voteAverage;
-    data['vote_count'] = this.voteCount;
-    return data;
-  }
-}
-
-class TVdetail {
-  bool? adult;
-  String? backdropPath;
-  List<int>? episodeRunTime;
-  String? firstAirDate;
-  List<Genres>? genres;
-  String? homepage;
-  int? id;
-  bool? inProduction;
-  String? name;
-  int? numberOfEpisodes;
-  int? numberOfSeasons;
-  String? originalName;
-  String? overview;
-  double? popularity;
-  String? posterPath;
-  List<Seasons>? seasons;
-  String? status;
-  String? tagline;
-  String? type;
-  double? voteAverage;
-  int? voteCount;
-
-  TVdetail(
-      {this.adult,
-      this.backdropPath,
-      this.episodeRunTime,
-      this.firstAirDate,
-      this.genres,
-      this.homepage,
-      this.id,
-      this.inProduction,
-      this.name,
-      this.numberOfEpisodes,
-      this.numberOfSeasons,
-      this.originalName,
-      this.overview,
-      this.popularity,
-      this.posterPath,
-      this.seasons,
-      this.status,
-      this.tagline,
-      this.type,
-      this.voteAverage,
-      this.voteCount});
-
-  TVdetail.fromJson(Map<String, dynamic> json) {
-    adult = json['adult'];
-    backdropPath = json['backdrop_path'];
-    episodeRunTime = json['episode_run_time'].cast<int>();
-    firstAirDate = json['first_air_date'];
-    if (json['genres'] != null) {
-      genres = <Genres>[];
-      json['genres'].forEach((v) {
-        genres!.add(new Genres.fromJson(v));
-      });
-    }
-    homepage = json['homepage'];
-    id = json['id'];
-    inProduction = json['in_production'];
-    name = json['name'];
-    numberOfEpisodes = json['number_of_episodes'];
-    numberOfSeasons = json['number_of_seasons'];
-    originalName = json['original_name'];
-    overview = json['overview'];
-    popularity = json['popularity'];
-    posterPath = json['poster_path'];
-    if (json['seasons'] != null) {
-      seasons = <Seasons>[];
-      json['seasons'].forEach((v) {
-        seasons!.add(new Seasons.fromJson(v));
-      });
-    }
-    status = json['status'];
-    tagline = json['tagline'];
-    type = json['type'];
-    voteAverage = json['vote_average'];
-    voteCount = json['vote_count'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['episode_run_time'] = this.episodeRunTime;
-    data['first_air_date'] = this.firstAirDate;
-    if (this.genres != null) {
-      data['genres'] = this.genres!.map((v) => v.toJson()).toList();
-    }
-    data['homepage'] = this.homepage;
-    data['id'] = this.id;
-    data['in_production'] = this.inProduction;
-    data['name'] = this.name;
-    data['number_of_episodes'] = this.numberOfEpisodes;
-    data['number_of_seasons'] = this.numberOfSeasons;
-    data['original_name'] = this.originalName;
-    data['overview'] = this.overview;
-    data['popularity'] = this.popularity;
-    data['poster_path'] = this.posterPath;
-    if (this.seasons != null) {
-      data['seasons'] = this.seasons!.map((v) => v.toJson()).toList();
-    }
-    data['status'] = this.status;
-    data['tagline'] = this.tagline;
-    data['type'] = this.type;
-    data['vote_average'] = this.voteAverage;
-    data['vote_count'] = this.voteCount;
-    return data;
-  }
-}
-class Seasons {
-  String? airDate;
-  int? episodeCount;
-  int? id;
-  String? name;
-  String? overview;
-  String? posterPath;
-  int? seasonNumber;
-
-  Seasons(
-      {this.airDate,
-      this.episodeCount,
-      this.id,
-      this.name,
-      this.overview,
-      this.posterPath,
-      this.seasonNumber});
-
-  Seasons.fromJson(Map<String, dynamic> json) {
-    airDate = json['air_date'];
-    episodeCount = json['episode_count'];
-    id = json['id'];
-    name = json['name'];
-    overview = json['overview'];
-    posterPath = json['poster_path'];
-    seasonNumber = json['season_number'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['air_date'] = this.airDate;
-    data['episode_count'] = this.episodeCount;
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['overview'] = this.overview;
-    data['poster_path'] = this.posterPath;
-    data['season_number'] = this.seasonNumber;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
     return data;
   }
 }
@@ -427,7 +173,7 @@ class TVimbd {
   TVimbd(
       {
         this.id,
-        });
+      });
 
   TVimbd.fromJson(Map<String, dynamic> json) {
 
@@ -435,8 +181,257 @@ class TVimbd {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    return data;
+  }
+}
+
+class Seasondata {
+  String? sId;
+  String? airDate;
+  List<Episodes>? episodes;
+  String? name;
+  String? overview;
+  int? id;
+  String? posterPath;
+  int? seasonNumber;
+
+  Seasondata(
+      {this.sId,
+        this.airDate,
+        this.episodes,
+        this.name,
+        this.overview,
+        this.id,
+        this.posterPath,
+        this.seasonNumber});
+
+  Seasondata.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    airDate = json['air_date'];
+    if (json['episodes'] != null) {
+      episodes = <Episodes>[];
+      json['episodes'].forEach((v) {
+        episodes!.add(Episodes.fromJson(v));
+      });
+    }
+    name = json['name'];
+    overview = json['overview'];
+    id = json['id'];
+    posterPath = json['poster_path'];
+    seasonNumber = json['season_number'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = sId;
+    data['air_date'] = airDate;
+    if (episodes != null) {
+      data['episodes'] = episodes!.map((v) => v.toJson()).toList();
+    }
+    data['name'] = name;
+    data['overview'] = overview;
+    data['id'] = id;
+    data['poster_path'] = posterPath;
+    data['season_number'] = seasonNumber;
+    return data;
+  }
+}
+
+class Episodes {
+  String? airDate;
+  int? episodeNumber;
+  int? id;
+  String? name;
+  String? overview;
+  String? productionCode;
+  int? runtime;
+  int? seasonNumber;
+  int? showId;
+  String? stillPath;
+  double? voteAverage;
+  int? voteCount;
+  List<Crew>? crew;
+  List<GuestStars>? guestStars;
+
+  Episodes(
+      {this.airDate,
+        this.episodeNumber,
+        this.id,
+        this.name,
+        this.overview,
+        this.productionCode,
+        this.runtime,
+        this.seasonNumber,
+        this.showId,
+        this.stillPath,
+        this.voteAverage,
+        this.voteCount,
+        this.crew,
+        this.guestStars});
+
+  Episodes.fromJson(Map<String, dynamic> json) {
+    airDate = json['air_date'];
+    episodeNumber = json['episode_number'];
+    id = json['id'];
+    name = json['name'];
+    overview = json['overview'];
+    productionCode = json['production_code'];
+    runtime = json['runtime'];
+    seasonNumber = json['season_number'];
+    showId = json['show_id'];
+    stillPath = json['still_path'];
+    voteAverage = json['vote_average'];
+    voteCount = json['vote_count'];
+    if (json['crew'] != null) {
+      crew = <Crew>[];
+      json['crew'].forEach((v) {
+        crew!.add(Crew.fromJson(v));
+      });
+    }
+    if (json['guest_stars'] != null) {
+      guestStars = <GuestStars>[];
+      json['guest_stars'].forEach((v) {
+        guestStars!.add(GuestStars.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['air_date'] = airDate;
+    data['episode_number'] = episodeNumber;
+    data['id'] = id;
+    data['name'] = name;
+    data['overview'] = overview;
+    data['production_code'] = productionCode;
+    data['runtime'] = runtime;
+    data['season_number'] = seasonNumber;
+    data['show_id'] = showId;
+    data['still_path'] = stillPath;
+    data['vote_average'] = voteAverage;
+    data['vote_count'] = voteCount;
+    if (crew != null) {
+      data['crew'] = crew!.map((v) => v.toJson()).toList();
+    }
+    if (guestStars != null) {
+      data['guest_stars'] = guestStars!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Crew {
+  String? department;
+  String? job;
+  String? creditId;
+  bool? adult;
+  int? gender;
+  int? id;
+  String? knownForDepartment;
+  String? name;
+  String? originalName;
+  double? popularity;
+  String? profilePath;
+
+  Crew(
+      {this.department,
+        this.job,
+        this.creditId,
+        this.adult,
+        this.gender,
+        this.id,
+        this.knownForDepartment,
+        this.name,
+        this.originalName,
+        this.popularity,
+        this.profilePath});
+
+  Crew.fromJson(Map<String, dynamic> json) {
+    department = json['department'];
+    job = json['job'];
+    creditId = json['credit_id'];
+    adult = json['adult'];
+    gender = json['gender'];
+    id = json['id'];
+    knownForDepartment = json['known_for_department'];
+    name = json['name'];
+    originalName = json['original_name'];
+    popularity = json['popularity'];
+    profilePath = json['profile_path'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['department'] = department;
+    data['job'] = job;
+    data['credit_id'] = creditId;
+    data['adult'] = adult;
+    data['gender'] = gender;
+    data['id'] = id;
+    data['known_for_department'] = knownForDepartment;
+    data['name'] = name;
+    data['original_name'] = originalName;
+    data['popularity'] = popularity;
+    data['profile_path'] = profilePath;
+    return data;
+  }
+}
+
+class GuestStars {
+  String? character;
+  String? creditId;
+  int? order;
+  bool? adult;
+  int? gender;
+  int? id;
+  String? knownForDepartment;
+  String? name;
+  String? originalName;
+  double? popularity;
+  String? profilePath;
+
+  GuestStars(
+      {this.character,
+        this.creditId,
+        this.order,
+        this.adult,
+        this.gender,
+        this.id,
+        this.knownForDepartment,
+        this.name,
+        this.originalName,
+        this.popularity,
+        this.profilePath});
+
+  GuestStars.fromJson(Map<String, dynamic> json) {
+    character = json['character'];
+    creditId = json['credit_id'];
+    order = json['order'];
+    adult = json['adult'];
+    gender = json['gender'];
+    id = json['id'];
+    knownForDepartment = json['known_for_department'];
+    name = json['name'];
+    originalName = json['original_name'];
+    popularity = json['popularity'];
+    profilePath = json['profile_path'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['character'] = character;
+    data['credit_id'] = creditId;
+    data['order'] = order;
+    data['adult'] = adult;
+    data['gender'] = gender;
+    data['id'] = id;
+    data['known_for_department'] = knownForDepartment;
+    data['name'] = name;
+    data['original_name'] = originalName;
+    data['popularity'] = popularity;
+    data['profile_path'] = profilePath;
     return data;
   }
 }

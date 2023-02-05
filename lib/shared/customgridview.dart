@@ -1,383 +1,243 @@
 import 'package:flutter/material.dart';
 import 'package:pancake/shared/customvalues.dart';
-import 'package:pancake/shared/customwidgets.dart';
 import 'package:pancake/shared/movie_detailscreen.dart';
 import 'package:pancake/shared/tvshow_detailscreen.dart';
 
-class GridViewDatamovie extends StatefulWidget {
+class GridViewDatamovie extends StatelessWidget {
   const GridViewDatamovie({
     Key? key,
-    required this.futre,
+    required this.future,
   }) : super(key: key);
 
-  final Future futre;
+  final Future future;
 
-  @override
-  State<GridViewDatamovie> createState() => _GridViewDatamovieState();
-}
-
-class _GridViewDatamovieState extends State<GridViewDatamovie> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(canvasColor: Colors.black54),
-      home: SafeArea(
-        child: Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: PreferredSize(
-              preferredSize: const Size(500, 90),
-              child: Container(
-                height: 45,
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                child: Image.asset('assets/appbar.png'),
-              )),
-          body: Stack(
-            children:[
-              Backgroupimage(imageback: selectedbackimg),
-              FutureBuilder(
-              future: widget.futre,
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data.length == 0) {
-                    return Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          ClipRRect(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              child:
-                                  Image(image: AssetImage('assets/notfound.png'))),
-                          SizedBox(
-                            height: 20,
+    return FutureBuilder(
+      future: future,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data.length == 0) {
+            return const Center(
+              child: Text(
+                "NOT FOUND",
+                style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 5),
+              ),
+            );
+          } else {
+            return GridView.builder(
+                padding: const EdgeInsets.only(top: 10, bottom: 80),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 150, childAspectRatio: 0.7),
+                itemCount:
+                (snapshot.data.length > 18) ? 18 : snapshot.data.length,
+                itemBuilder: (context, index) {
+                  if (snapshot.data[index].posterPath == null) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MovieDescription(
+                                id: snapshot.data[index].id,
+                              )),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                          color: mode,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.only(
+                            left: 5, right: 10, bottom: 10),
+                        child: Center(
+                            child: Text(
+                              '${snapshot.data[index].title}',
+                              style: const TextStyle(fontSize: 20),
+                            )),
+                      ),
+                    );
+                  } else {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MovieDescription(
+                                id: snapshot.data[index].id,
+                              )),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 5, right: 10, bottom: 10),
+                        child: ClipRRect(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0)),
+                          child: Image.network(
+                            'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
+                            fit: BoxFit.cover,
                           ),
-                        ],
+                        ),
                       ),
                     );
                   }
-                  else
-                  {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 800,
-                          child: GridView.builder(
-                              gridDelegate:
-                                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 150,
-                                      childAspectRatio: 0.7),
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                if (snapshot.data[index].posterPath == null) {
-                                  return InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                MovieDescription(
-                                                  id: snapshot.data[index].id,
-                                                )),
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        color: uppermodecolor,
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      margin: const EdgeInsets.only(
-                                          left: 5, right: 10, bottom: 10),
-                                      child: Center(
-                                          child: Text(
-                                        '${snapshot.data[index].title}',
-                                        style: const TextStyle(fontSize: 20),
-                                      )),
-                                    ),
-                                  );
-                                } else {
-                                  return InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                MovieDescription(
-                                                  id: snapshot.data[index].id,
-                                                )),
-                                      );
-                                    },
-                                    child: Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 5, right: 10, bottom: 10),
-                                      child: ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(5.0)),
-                                        child: Image.network(
-                                          'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              }),
-                        ),
-                      ],
-                    );
-                  }
-                } else {
-                  return const SizedBox(
-                    height: 200,
-                  );
-                }
-              },
-            ),
-          ]
-          ),
-        ),
-      ),
+                });
+          }
+        } else {
+          return Container();
+        }
+      },
     );
   }
 }
 
-
-class GridViewDatatv extends StatefulWidget {
+class GridViewDatatv extends StatelessWidget {
   const GridViewDatatv({
     Key? key,
-    required this.futre,
+    required this.future,
   }) : super(key: key);
 
-  final Future futre;
+  final Future future;
+  final String title = "TV";
 
-  @override
-  State<GridViewDatatv> createState() => _GridViewDatatvState();
-}
-
-class _GridViewDatatvState extends State<GridViewDatatv> {
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: future,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data.length == 0) {
+            return const Center(
+              child: Text(
+                "NOT FOUND",
+                style: TextStyle(
+                    color: Colors.lightBlueAccent,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 5),
+              ),
+            );
+          } else {
+            return GridView.builder(
+                padding: const EdgeInsets.only(top: 10, bottom: 80),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 150, childAspectRatio: 0.7),
+                itemCount:
+                (snapshot.data.length > 18) ? 18 : snapshot.data.length,
+                itemBuilder: (context, index) {
+                  if (snapshot.data[index].posterPath == null) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TVDescription(
+                                id: snapshot.data[index].id,
+                              )),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(10.0)),
+                          color: mode,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.only(
+                            left: 5, right: 10, bottom: 10),
+                        child: Center(
+                            child: Text(
+                              '${snapshot.data[index].name}',
+                              style: const TextStyle(fontSize: 20),
+                            )),
+                      ),
+                    );
+                  } else {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TVDescription(
+                                id: snapshot.data[index].id,
+                              )),
+                        );
+                      },
+                      child: Container(
+                        margin: const EdgeInsets.only(
+                            left: 5, right: 10, bottom: 10),
+                        child: ClipRRect(
+                          borderRadius:
+                          const BorderRadius.all(Radius.circular(5.0)),
+                          child: Image.network(
+                            'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+                });
+          }
+        } else {
+          return Container();
+        }
+      },
+    );
+  }
+}
+
+class GridPage extends StatelessWidget {
+  const GridPage(
+      {Key? key, required this.title, required this.future, required this.type})
+      : super(key: key);
+
+  final String title;
+  final Future future;
+  final String type;
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(canvasColor: Colors.black54),
+      theme: ThemeData(canvasColor: xcanvas),
       home: SafeArea(
         child: Scaffold(
-          extendBodyBehindAppBar: true,
           appBar: PreferredSize(
-              preferredSize: const Size(500, 90),
-              child: Container(
-                height: 45,
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                child: Image.asset('assets/appbar.png'),
-              )),
-          body: Stack(
-              children:[
-                Backgroupimage(imageback: selectedbackimg),
-                FutureBuilder(
-                  future: widget.futre,
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data.length == 0) {
-                        return Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                               ClipRRect(
-                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                  child:
-                                  Image(image: AssetImage('assets/notfound.png'))),
-                               SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          ),
-                        );
-                      }
-                      else
-                      {
-                        return Column(
-                          children: [
-                            SizedBox(
-                              height: 800,
-                              child: GridView.builder(
-                                  gridDelegate:
-                                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                                      maxCrossAxisExtent: 150,
-                                      childAspectRatio: 0.7),
-                                  itemCount: snapshot.data.length,
-                                  itemBuilder: (context, index) {
-                                    if (snapshot.data[index].posterPath == null) {
-                                      return InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TVDescription(
-                                                      id: snapshot.data[index].id,
-                                                    )),
-                                          );
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: const BorderRadius.all(
-                                                Radius.circular(10.0)),
-                                            color: uppermodecolor,
-                                          ),
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          margin: const EdgeInsets.only(
-                                              left: 5, right: 10, bottom: 10),
-                                          child: Center(
-                                              child: Text(
-                                                '${snapshot.data[index].name}',
-                                                style: const TextStyle(fontSize: 20),
-                                              )),
-                                        ),
-                                      );
-                                    } else {
-                                      return InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TVDescription(
-                                                      id: snapshot.data[index].id,
-                                                    )),
-                                          );
-                                        },
-                                        child: Container(
-                                          margin: const EdgeInsets.only(
-                                              left: 5, right: 10, bottom: 10),
-                                          child: ClipRRect(
-                                            borderRadius: const BorderRadius.all(
-                                                Radius.circular(5.0)),
-                                            child: Image.network(
-                                              'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                  }),
-                            ),
-                          ],
-                        );
-                      }
-                    } else {
-                      return const SizedBox(
-                        height: 200,
-                      );
-                    }
-                  },
-                ),
-              ]
+            preferredSize: Size(size.width * 0.6, size.height * 0.1),
+            child: Container(
+                width: size.width * 0.6,
+                margin: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.teal)),
+                child:  Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      color: Colors.teal,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                      letterSpacing: 2),
+                )),
+          ),
+          body: SizedBox(
+            height: size.height * 0.9,
+            child: (type == 'movie')
+                ? (GridViewDatamovie(future: future))
+                : (GridViewDatatv(future: future)),
           ),
         ),
       ),
     );
   }
 }
-
-
-// class GridViewDatatv extends StatelessWidget {
-//   const GridViewDatatv({
-//     Key? key,
-//     required this.futre,
-//   }) : super(key: key);
-//
-//   final Future futre;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(canvasColor: Colors.black54),
-//       home: SafeArea(
-//         child: Scaffold(
-//           appBar: PreferredSize(
-//               preferredSize: const Size(500, 90),
-//               child: Container(
-//                 height: 45,
-//                 margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-//                 child: Image.asset('assets/appbar.png'),
-//               )),
-//           body: FutureBuilder(
-//             future: futre,
-//             builder: (BuildContext context, AsyncSnapshot snapshot) {
-//               if (snapshot.hasData) {
-//                 return GridView.builder(
-//                     gridDelegate:
-//                         const SliverGridDelegateWithMaxCrossAxisExtent(
-//                             maxCrossAxisExtent: 150, childAspectRatio: 0.7),
-//                     itemCount: snapshot.data.length,
-//                     itemBuilder: (context, index) {
-//                       if (snapshot.data[index].posterPath == null) {
-//                         return InkWell(
-//                           onTap: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                   builder: (context) => TVDescription(
-//                                         id: snapshot.data[index].id,
-//                                       )),
-//                             );
-//                           },
-//                           child: Container(
-//                             decoration: BoxDecoration(
-//                               borderRadius:
-//                               const BorderRadius.all(Radius.circular(5.0)),
-//                               color: uppermodecolor,
-//                             ),
-//                             padding: const EdgeInsets.only(left: 10),
-//                             margin: const EdgeInsets.only(
-//                                 left: 5, right: 10, bottom: 10),
-//                             child: Center(
-//                                 child: Text(
-//                               '${snapshot.data[index].name}',
-//                               style: const TextStyle(fontSize: 20),
-//                             )),
-//                           ),
-//                         );
-//                       } else {
-//                         return InkWell(
-//                           onTap: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                   builder: (context) => TVDescription(
-//                                         id: snapshot.data[index].id,
-//                                       )),
-//                             );
-//                           },
-//                           child: Container(
-//                             margin: const EdgeInsets.only(
-//                                 left: 5, right: 10, bottom: 10),
-//                             child: ClipRRect(
-//                               borderRadius:
-//                                   const BorderRadius.all(Radius.circular(5.0)),
-//                               child: Image.network(
-//                                 'https://image.tmdb.org/t/p/w500/${snapshot.data[index].posterPath}',
-//                                 fit: BoxFit.cover,
-//                               ),
-//                             ),
-//                           ),
-//                         );
-//                       }
-//                     });
-//               } else {
-//                 return const SizedBox(
-//                   height: 200,
-//                 );
-//               }
-//             },
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
