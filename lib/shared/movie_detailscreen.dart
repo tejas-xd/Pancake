@@ -114,7 +114,7 @@ class _MovieDescriptionState extends State<MovieDescription> {
                       height: size.height * 0.08,
                       width: size.width * 0.8,
                       decoration: const BoxDecoration(
-                        color: Colors.blueGrey,
+                        color: Color(0xff242124),
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(50),
                             topLeft: Radius.circular(50)),

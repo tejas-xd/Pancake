@@ -13,7 +13,7 @@ class Searchscreenbody extends StatefulWidget {
 
 class _SearchscreenbodyState extends State<Searchscreenbody> {
   final myController = TextEditingController();
-
+  String query = "";
 
   @override
   void dispose() {

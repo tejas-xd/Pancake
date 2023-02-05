@@ -150,7 +150,7 @@ class _TVDescriptionState extends State<TVDescription> {
                           left: size.width * 0.2,
                           bottom: 30),
                       decoration: const BoxDecoration(
-                        color: Colors.blueGrey,
+                        color: Color(0xff242124),
                         borderRadius: BorderRadius.only(
                             bottomLeft: Radius.circular(50),
                             topLeft: Radius.circular(50)),

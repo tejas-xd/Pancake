@@ -5,7 +5,7 @@ Color lightmode = Colors.black;
 
 Color mode = darkmode;
 
-String query = "";
+
 String mediatype = 'movie';
 
 Color xcanvas = const Color(0xff000000);
