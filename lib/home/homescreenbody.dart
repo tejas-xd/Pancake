@@ -20,41 +20,41 @@ class _HomescreenbodyState extends State<Homescreenbody>
 
     return Scaffold(
       appBar: PreferredSize(
-          preferredSize: Size(size.width, size.height * 0.12),
+          preferredSize: Size(size.width, size.height * 0.1),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
-                height: size.height * 0.03,
-              ),
+              // SizedBox(
+              //   height: size.height * 0.03,
+              // ),
               Container(
                 height: size.height * 0.04,
-                margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 20),
+                margin: const EdgeInsets.only(top: 25,bottom: 15,left:30,right: 20),
                 child: Image.asset('assets/appbar.png'),
               ),
               Container(
-                height: size.height * 0.06,
-                width: size.width * 0.6,
+                height: size.height * 0.04,
+                width: size.width * 0.8,
                 color: Colors.transparent,
                 child: TabBar(
-                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicatorSize: TabBarIndicatorSize.label,
                   labelPadding: EdgeInsets.zero,
-                  indicatorColor: xtindicator,
+                  indicatorColor: xselected,
                   controller: tabController,
                   labelStyle: TextStyle(
-                    color: xtlabel,
+                    color: xhightext,
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                   tabs: const [
                     Tab(
-                      text: 'Home',
+                      text: '   Home   ',
                     ),
                     Tab(
-                      text: 'Movies',
+                      text: '   Movies   ',
                     ),
                     Tab(
-                      text: 'Shows',
+                      text: '   Shows   ',
                     ),
                   ],
                 ),

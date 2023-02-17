@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pancake/googlesignin.dart';
+import 'package:pancake/shared/customvalues.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,9 +33,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: const Text('All your favorite films in one click',
+                  child: Text('All your favorite films in one click',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: xlowtext,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 5),
@@ -50,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
               fit: BoxFit.cover,),
             ),
             SizedBox(
-              height: size.height*0.1,
+              height: size.height*0.05,
             ),
             TextButton(
               onPressed: () {
@@ -62,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 50,
                 width: size.width*0.6,
                 decoration: BoxDecoration(
-                  color: Colors.blueGrey,
+                  color: xbackground,
                   borderRadius: BorderRadius.circular(10.0),
 
                 ),

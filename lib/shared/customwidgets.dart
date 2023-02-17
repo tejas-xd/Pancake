@@ -48,9 +48,10 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
                     );
                   }
                 },
-                child: SizedBox(
+                child: Container(
                   width: size.width,
                   height: size.width*0.6,
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                     child: Image(
@@ -65,7 +66,7 @@ class _HorizontalSliderState extends State<HorizontalSlider> {
               options: CarouselOptions(
                 aspectRatio: 10 / 6,
                 autoPlay: true,
-                viewportFraction: 1,
+                viewportFraction: 0.9,
               ),
             );
           } else {
