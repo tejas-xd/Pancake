@@ -534,7 +534,7 @@ class Seasonlist extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => WebViewExampleTV(
-                                  id: snapshot.data[index].id.toString(),
+                                  id: 'tmdb=$id&season=$season&episode=${index+1}',
                                 )),
                       );
                     },

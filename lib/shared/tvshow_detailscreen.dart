@@ -291,7 +291,7 @@ class _TVDescriptionState extends State<TVDescription> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: const [
                                         Icon(
-                                          Icons.watch_later_outlined,
+                                          Icons.bookmark_added_rounded,
                                           color: Colors.greenAccent,
                                           size: 25.0,
                                         ),
@@ -308,7 +308,7 @@ class _TVDescriptionState extends State<TVDescription> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: const [
                                         Icon(
-                                          Icons.add_circle_outline,
+                                          Icons.bookmark_add_outlined,
                                           color: Colors.white,
                                           size: 25.0,
                                         ),

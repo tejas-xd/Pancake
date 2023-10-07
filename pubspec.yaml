@@ -43,6 +43,7 @@ dependencies:
   google_sign_in: ^5.4.2
   dio: ^4.0.6
   google_fonts: ^3.0.1
+  fluttericon: ^2.0.0
   webview_flutter: ^3.0.4
   google_nav_bar: ^5.0.6
   cached_network_image: ^3.2.3

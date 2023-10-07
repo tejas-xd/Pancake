@@ -27,7 +27,7 @@ class WebViewExampleState extends State<WebViewExample> {
     return 
        Scaffold(
          body: WebView(
-          initialUrl: 'https://2embed.org/embed/movie?tmdb=${widget.id.toString()}',
+          initialUrl: 'https://vidsrc.me/embed/movie?tmdb=${widget.id.toString()}',
           javascriptMode: JavascriptMode.unrestricted,
           navigationDelegate: (navigation) => NavigationDecision.prevent,
       ),
